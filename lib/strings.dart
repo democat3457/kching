@@ -1,0 +1,1 @@
+const String mainTitle = 'K\'Ching Sales System';
