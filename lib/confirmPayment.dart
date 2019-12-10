@@ -6,14 +6,17 @@ class ConfirmPayment extends StatelessWidget {
   final int cardNumber;
   final double chargeAmmount;
   final String team;
+  
+  final List<dynamic> possibleItems;
+  final List<dynamic> selectedItems;
 
-  ConfirmPayment(this.cardNumber, this.chargeAmmount, this.team);
+  ConfirmPayment(this.selectedItems, this.possibleItems, this.cardNumber, this.chargeAmmount, this.team);
 
   void chargeUser(context) async {
     await Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => Charging(cardNumber, chargeAmmount,team)));
+            builder: (context) => Charging(possibleItems, selectedItems, cardNumber, team, chargeAmmount)));
     Navigator.pop(context);
   }
 
