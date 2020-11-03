@@ -14,5 +14,6 @@ void main() {
     themeMode: ThemeMode.dark,
     initialRoute: '/',
     routes: routes,
+    debugShowCheckedModeBanner: false,
   ));
 }
