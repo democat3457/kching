@@ -5,10 +5,11 @@ class Progress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(mainTitle),
-      ),
-      body: Center(child: CircularProgressIndicator(),)
-    );
-  } 
+        appBar: AppBar(
+          title: Text(mainTitle + ": Loading"),
+        ),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ));
+  }
 }

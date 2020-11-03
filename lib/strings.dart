@@ -1,1 +1,1 @@
-const String mainTitle = 'ProDuckTive Sales System';
+const String mainTitle = "ProDuck2Door";
