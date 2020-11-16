@@ -1,1 +1,0 @@
-const String mainTitle = 'ProDuckTive Sales System';
