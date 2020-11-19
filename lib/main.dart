@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos_system/cart.dart';
 import 'package:pos_system/pages/Teams.dart';
 import 'consts.dart';
 
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: PRIMARY_COLOR,
       ),
       home: MyHomePage(title: TITLE),
+      routes: {Cart.ROUTE: (context) => Cart()},
       debugShowCheckedModeBanner: false,
     );
   }

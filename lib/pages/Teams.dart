@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos_system/cart.dart';
 import 'package:pos_system/consts.dart';
 import 'package:pos_system/pages/loading.dart';
 import 'package:pos_system/utils/api.dart';
@@ -59,9 +60,8 @@ class _TeamsState extends State<Teams> {
       return Scaffold(
         appBar: AppBar(title: Text(TITLE)),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.shopping_bag_outlined),
-          onPressed: () {}, // TODO Add Checkout Route
-        ),
+            child: Icon(Icons.shopping_bag_outlined),
+            onPressed: () => Navigator.pushNamed(context, "/cart")),
         body: GridView.count(
           shrinkWrap: true,
           crossAxisCount: STORES_WIDTH,
