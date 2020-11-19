@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pos_system/cart.dart';
 import 'package:pos_system/consts.dart';
 import 'package:pos_system/pages/Store.dart';
 import 'package:pos_system/pages/loading.dart';
@@ -54,14 +53,15 @@ class _TeamsState extends State<Teams> {
     return Center(
       child: Card(
         child: InkWell(
-          onTap: () => Navigator.pushNamed(context, "/store",
+          onTap: () => Navigator.pushNamed(context, Store.ROUTE,
               arguments: StoreArguments(name, code)),
           child: Column(
             children: [
               ListTile(
-                  leading: Icon(Icons.store),
-                  title: Text(name),
-                  subtitle: Text(_matchToID(code))),
+                leading: const Icon(Icons.store),
+                title: Text(name),
+                subtitle: Text(_matchToID(code)),
+              ),
             ],
           ),
         ),
@@ -88,6 +88,7 @@ class _TeamsState extends State<Teams> {
         body: GridView.count(
           shrinkWrap: true,
           crossAxisCount: STORES_WIDTH,
+          // childAspectRatio: MediaQuery.of(context).size.height / 300,
           childAspectRatio: STORES_ASPECT_RATIO,
           children: List.generate(this._data["teams"].length,
               (index) => _getTeamCard(context, index)),
