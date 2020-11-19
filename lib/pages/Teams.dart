@@ -24,6 +24,7 @@ String _matchToID(String id) {
 }
 
 class Teams extends StatefulWidget {
+  static const String ROUTE = "/";
   @override
   State<StatefulWidget> createState() {
     return _TeamsState();

@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: PRIMARY_COLOR,
       ),
       routes: {
-        "/": (context) => Teams(),
+        Teams.ROUTE: (context) => Teams(),
         Cart.ROUTE: (context) => Cart(),
         Store.ROUTE: (context) => Store(),
       },
-      initialRoute: "/",
+      initialRoute: Teams.ROUTE,
       debugShowCheckedModeBanner: false,
     );
   }
