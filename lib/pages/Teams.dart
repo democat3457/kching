@@ -6,15 +6,15 @@ import 'package:pos_system/utils/api.dart';
 String _matchToID(String id) {
   switch (id.substring(0, 2).toUpperCase()) {
     case "SG":
-      return "";
+      return "Sports Gear";
     case "HG":
-      return "";
+      return "Home Goods";
     case "CC":
-      return "";
+      return "Child Care";
     case "FA":
-      return "";
+      return "Fashion & Accessories";
     case "HB":
-      return "";
+      return "Health & Beauty";
     case "CE":
       return "Consumer Electronics";
     default:
@@ -57,9 +57,10 @@ class _TeamsState extends State<Teams> {
       return Loading();
     } else if (_loaded && !_loading) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text(TITLE),
-          actions: [], // TODO: Checkout
+        appBar: AppBar(title: Text(TITLE)),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.shopping_bag_outlined),
+          onPressed: () {}, // TODO Add Checkout Route
         ),
         body: GridView.count(
           shrinkWrap: true,
