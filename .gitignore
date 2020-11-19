@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Miscellaneous
 *.class
 *.log
@@ -51,7 +50,6 @@ app.*.map.json
 /ios
 /linux
 /web
-=======
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
@@ -76,4 +74,3 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
->>>>>>> 137e5fc2f0d8144cbfdeb2b3594b260c20503a2c
