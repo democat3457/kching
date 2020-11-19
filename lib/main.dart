@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'pages/loading.dart';
-import 'package:http/http.dart' as http;
-import 'consts.dart' as consts;
+import 'package:pos_system/pages/Teams.dart';
+import 'consts.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,11 +8,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: consts.title,
+      title: TITLE,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: PRIMARY_COLOR,
       ),
-      home: MyHomePage(title: consts.title),
+      home: MyHomePage(title: TITLE),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -33,6 +30,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Loading();
+    return Teams();
   }
 }

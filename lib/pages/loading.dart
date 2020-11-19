@@ -5,7 +5,7 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("$title: Loading")),
+      appBar: AppBar(title: Text("$TITLE: Loading")),
       body: Center(child: CircularProgressIndicator()),
     );
   }
