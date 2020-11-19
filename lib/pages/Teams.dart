@@ -47,6 +47,28 @@ class _TeamsState extends State<Teams> {
     });
   }
 
+  Widget _getTeamCard(BuildContext context, int index) {
+    final Map<String, dynamic> teamInfo = this._data["teams"][index];
+    final String name = teamInfo["name"];
+    final String code = teamInfo["code"];
+    return Center(
+      child: Card(
+        child: InkWell(
+          onTap: () => Navigator.pushNamed(context, "/store",
+              arguments: StoreArguments(name, code)),
+          child: Column(
+            children: [
+              ListTile(
+                  leading: Icon(Icons.store),
+                  title: Text(name),
+                  subtitle: Text(_matchToID(code))),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_loaded && !_loading) {
@@ -67,26 +89,8 @@ class _TeamsState extends State<Teams> {
           shrinkWrap: true,
           crossAxisCount: STORES_WIDTH,
           childAspectRatio: STORES_ASPECT_RATIO,
-          children: List.generate(this._data["teams"].length, (index) {
-            var teamInfo = this._data["teams"][index];
-            return Center(
-              child: Card(
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, "/store",
-                      arguments:
-                          StoreArguments(teamInfo["name"], teamInfo["code"])),
-                  child: Column(
-                    children: [
-                      ListTile(
-                          leading: Icon(Icons.store),
-                          title: Text(teamInfo["name"]),
-                          subtitle: Text(_matchToID(teamInfo["code"]))),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
+          children: List.generate(this._data["teams"].length,
+              (index) => _getTeamCard(context, index)),
         ),
       );
     } else {
