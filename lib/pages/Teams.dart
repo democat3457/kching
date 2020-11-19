@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pos_system/cart.dart';
 import 'package:pos_system/consts.dart';
+import 'package:pos_system/pages/Store.dart';
 import 'package:pos_system/pages/loading.dart';
 import 'package:pos_system/utils/api.dart';
 
@@ -71,7 +72,9 @@ class _TeamsState extends State<Teams> {
             return Center(
               child: Card(
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(context, "/store",
+                      arguments:
+                          StoreArguments(teamInfo["name"], teamInfo["code"])),
                   child: Column(
                     children: [
                       ListTile(

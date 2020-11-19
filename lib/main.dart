@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pos_system/cart.dart';
-import 'package:pos_system/pages/Teams.dart';
+import 'cart.dart';
 import 'consts.dart';
+import 'pages/Store.dart';
+import 'pages/Teams.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,25 +14,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: PRIMARY_COLOR,
       ),
-      home: MyHomePage(title: TITLE),
-      routes: {Cart.ROUTE: (context) => Cart()},
+      routes: {
+        "/": (context) => Teams(),
+        Cart.ROUTE: (context) => Cart(),
+        Store.ROUTE: (context) => Store(),
+      },
+      initialRoute: "/",
       debugShowCheckedModeBanner: false,
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Teams();
   }
 }
