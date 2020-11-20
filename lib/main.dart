@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'cart.dart';
 import 'consts.dart';
+import 'pages/Cart.dart';
 import 'pages/Store.dart';
 import 'pages/Teams.dart';
 
