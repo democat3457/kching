@@ -48,7 +48,7 @@ class _TeamsState extends State<Teams> {
   }
 
   Widget _getTeamCard(BuildContext context, int index) {
-    final Map<String, dynamic> teamInfo = this._data["teams"][index];
+    final teamInfo = Map<String, String>.from(this._data["teams"][index]);
     final String name = teamInfo["name"];
     final String code = teamInfo["code"];
     return Center(
