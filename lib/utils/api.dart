@@ -1,8 +1,9 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:pos_system/consts.dart';
+import 'dart:developer';
 
-enum Tasks { Login, Teams }
+enum Tasks { Login, Teams, Products }
 
 extension TaskAPI on Tasks {
   String get api {
@@ -13,6 +14,8 @@ extension TaskAPI on Tasks {
       case Tasks.Teams:
         return "teams";
         break;
+      case Tasks.Products:
+        return "products";
       default:
         return "err";
     }
@@ -22,7 +25,8 @@ extension TaskAPI on Tasks {
 String _buildGetHeader(Map<String, String> data) {
   String buf = "";
   data.forEach((key, value) {
-    buf += "$key=$value&";
+    buf += key + "=" + value + "&";
+    // buf += "$key=$value&";
   });
   if (buf.length != 0) {
     buf = buf.substring(0, buf.length - 1); // Remove final &
@@ -37,6 +41,7 @@ Future<Map<String, dynamic>> getter(
   http.Response respose =
       await http.get("$ENDPOINT?task=$_task&$_processedData");
   assert(respose.statusCode == 200);
+  log(respose.body);
   return convert.json.decode(respose.body);
 }
 
