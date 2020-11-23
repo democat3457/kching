@@ -83,8 +83,11 @@ class _TeamsState extends State<Teams> {
     } else if (_loaded && !_loading) {
       return Scaffold(
         appBar: AppBar(title: Text(TITLE)),
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.shopping_bag_outlined),
+        floatingActionButton: FloatingActionButton.extended(
+            icon: Icon(
+              Icons.shopping_bag_outlined,
+            ),
+            label: Text("Cart"),
             onPressed: () => Navigator.pushNamed(context, "/cart")),
         body: GridView.count(
           shrinkWrap: true,
