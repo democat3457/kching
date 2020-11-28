@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pos_system/consts.dart';
+import 'package:pos_system/utils/CartData.dart';
 import 'package:pos_system/utils/api.dart';
 
 import 'loading.dart';
@@ -23,7 +25,7 @@ class _StoreRoute extends State<Store> {
   bool _loaded = false;
   Map<String, dynamic> _data = {};
 
-  Widget buildProductList() {
+  Widget buildProductList(String code) {
     return ListView.separated(
       itemCount: this._data["data"].length,
       separatorBuilder: (context, index) {
@@ -35,13 +37,24 @@ class _StoreRoute extends State<Store> {
             child: ListTile(
                 leading: Container(
                     height: double.infinity,
-                    child:
-                        Text(itemData["cost"].toDouble().toStringAsFixed(2))),
+                    width: 50,
+                    child: Text(
+                      itemData["cost"].toDouble().toStringAsFixed(2),
+                      style: Theme.of(context).textTheme.caption,
+                    )),
                 title: Text(itemData["name"]),
-                subtitle: Text(itemData["desc"]),
+                subtitle: Text(
+                  itemData["desc"],
+                  style: Theme.of(context).textTheme.caption,
+                ),
                 trailing: IconButton(
-                  icon: Icon(Icons.add_shopping_cart_sharp),
-                  onPressed: () => null,
+                  icon: Icon(
+                    Icons.add_shopping_cart_sharp,
+                  ),
+                  onPressed: () {
+                    CartData.addItems(
+                        {...itemData, "code": code.toUpperCase()}, 1);
+                  },
                 )));
       },
     );
@@ -79,14 +92,13 @@ class _StoreRoute extends State<Store> {
             appBar: AppBar(
               title: Text(args.name),
             ),
-            body: Center(
-                child: Text("Error Loading Products, Try again later!")));
+            body: Center(child: Text(ERROR_LOADING_PRODUCTS)));
       }
       return Scaffold(
           appBar: AppBar(
             title: Text(args.name),
           ),
-          body: buildProductList()
+          body: buildProductList(args.id)
           // body: Center(child: Text(_data.toString())),
           // body: Text(args.name),
           );
