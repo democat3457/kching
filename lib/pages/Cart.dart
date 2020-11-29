@@ -1,7 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:pos_system/consts.dart';
 import 'package:pos_system/utils/CartData.dart';
 
 import 'loading.dart';
+
+class _CartList extends StatelessWidget {
+  final _CartState state;
+  _CartList(this.state);
+  @override
+  Widget build(BuildContext context) {
+    int position = 0;
+    final data = state.getData();
+    List<Widget> widgets = List.from(data.map((i) {
+      final int curr = position;
+      position++;
+      return ListTile(
+        leading: Text(KCHING_BUCK_SYM + i["cost"].toStringAsFixed(2)),
+        title: Text(i["name"]),
+        trailing: IconButton(
+          icon: Icon(Icons.remove),
+          onPressed: () {
+            CartData.removeItem(curr).then((_) => state.reload());
+          },
+        ),
+      );
+    }).cast<Widget>());
+    return SingleChildScrollView(
+      child: Column(
+        children: widgets,
+      ),
+    );
+  }
+}
 
 class Cart extends StatefulWidget {
   static const String ROUTE = "/cart";
@@ -14,14 +44,25 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   bool _loading = false;
   bool _loaded = false;
-  Map<String, dynamic> _data = {};
+  List<Map<String, dynamic>> _data = [];
 
   void _loadItems() async {
-    _data = await CartData.getItems();
+    _data = List.from((await CartData.getItems())["items"]);
     setState(() {
       this._loaded = true;
       this._loading = false;
     });
+  }
+
+  void reload() {
+    setState(() {
+      _loading = false;
+      _loaded = false;
+    });
+  }
+
+  List<Map<String, dynamic>> getData() {
+    return _data;
   }
 
   @override
@@ -31,33 +72,53 @@ class _CartState extends State<Cart> {
     } else if (_loaded && !_loaded) {
       return Loading(title: "Shopping Cart");
     }
+    double total = 0.0;
+    for (final x in _data) {
+      total += x["cost"];
+    }
+    total = double.parse(total.toStringAsFixed(2));
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping Cart"),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text("Check Out"),
-        onPressed: () {},
-        icon: Icon(Icons.check_outlined),
-      ),
-      body: Center(
-          child: ListView.separated(
-        itemCount: _data["items"].length,
-        separatorBuilder: (context, index) {
-          return Divider(
-            thickness: 1,
-          );
-        },
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_data["items"][index]["name"]),
-            trailing: IconButton(
-              icon: Icon(Icons.remove),
-              onPressed: () {},
+      floatingActionButton: (_data.length == 0)
+          ? null
+          : FloatingActionButton.extended(
+              label: Text("Check Out"),
+              onPressed: () {
+                throw UnimplementedError();
+              },
+              icon: Icon(Icons.check_outlined),
             ),
-          );
-        },
-      )),
+      body: (_data.length == 0)
+          ? Center(
+              child: Text(
+              "It appears there is nothing in the cart,\n"
+              "try checking out the products that the many stores are selling "
+              "on the previous page",
+              textAlign: TextAlign.center,
+            ))
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(child: _CartList(this)),
+                SizedBox(
+                  height: 100.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Total: $KCHING_BUCK_SYM$total",
+                          style: Theme.of(context).textTheme.headline2,
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
     );
   }
 }

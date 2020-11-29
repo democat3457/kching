@@ -22,6 +22,13 @@ class CartData {
     }
   }
 
+  static Future<void> removeItem(int position) async {
+    var _runtime = await SharedPreferences.getInstance();
+    var _current = await getItems();
+    _current["items"].removeAt(position);
+    _runtime.setString(_dataVar, json.encode(_current));
+  }
+
   static Future<void> addItems(Map<String, dynamic> item, int count) async {
     var _runtime = await SharedPreferences.getInstance();
     var data = await getItems();
