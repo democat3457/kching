@@ -48,6 +48,7 @@ class _CheckoutState extends State<Checkout> {
               obscureText: false,
               autofocus: true,
               cursorColor: Colors.black,
+              textCapitalization: TextCapitalization.characters, // Not Working
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
