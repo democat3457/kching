@@ -15,8 +15,9 @@ class Loading extends StatelessWidget {
 }
 
 class LoadingDialog {
-  static Future<void> showLoading(BuildContext context, GlobalKey key) async {
-    return showDialog<void>(
+  static Future<void> showLoading(BuildContext context, GlobalKey key,
+      {String message = ""}) async {
+    return await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
@@ -24,6 +25,8 @@ class LoadingDialog {
           onWillPop: () async => false,
           child: SimpleDialog(
             key: key,
+            title:
+                (message == null || message.isNotEmpty) ? Text(message) : null,
             children: [
               Center(
                 child: CircularProgressIndicator(),

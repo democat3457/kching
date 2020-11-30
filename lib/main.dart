@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
         Teams.ROUTE: (context) => Teams(),
         Cart.ROUTE: (context) => Cart(),
         Store.ROUTE: (context) => Store(),
-        Checkout.ROUTE: (context) => Checkout(),
       },
       initialRoute: Teams.ROUTE,
       debugShowCheckedModeBanner: false,

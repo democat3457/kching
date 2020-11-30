@@ -91,7 +91,7 @@ class _CartState extends State<Cart> {
                   context: context,
                   barrierDismissible: false,
                   builder: (context) {
-                    return Checkout();
+                    return Checkout(CheckoutArguments(_data));
                   },
                 );
                 // Navigator.pushNamed(context, Checkout.ROUTE);

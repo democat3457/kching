@@ -1,9 +1,10 @@
 import 'dart:convert' as convert;
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pos_system/consts.dart';
 import 'dart:developer';
 
-enum Tasks { Login, Teams, Products }
+enum Tasks { Login, Teams, Products, Purchase }
 
 extension TaskAPI on Tasks {
   String get api {
@@ -16,6 +17,8 @@ extension TaskAPI on Tasks {
         break;
       case Tasks.Products:
         return "products";
+      case Tasks.Purchase:
+        return "purchase";
       default:
         return "err";
     }
@@ -46,9 +49,13 @@ Future<Map<String, dynamic>> getter(
 }
 
 Future<Map<String, dynamic>> setter(
-    Tasks task, Map<String, String> data) async {
-  http.Response response =
-      await http.post(ENDPOINT + "?" + task.api, body: data);
+    Tasks task, Map<String, dynamic> data) async {
+  http.Response response = await http
+      .get(ENDPOINT + "?task=" + task.api + "&data=" + json.encode(data)
+          // headers: <String, String>{
+          //   'Content-Type': 'application/json; charset=UTF-8',
+          // },
+          );
   assert(response.statusCode == 200);
   return convert.json.decode(response.body);
 }
