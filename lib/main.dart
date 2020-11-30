@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pos_system/pages/Checkout.dart';
 import 'consts.dart';
 import 'pages/Cart.dart';
 import 'pages/Store.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         Teams.ROUTE: (context) => Teams(),
         Cart.ROUTE: (context) => Cart(),
         Store.ROUTE: (context) => Store(),
+        Checkout.ROUTE: (context) => Checkout(),
       },
       initialRoute: Teams.ROUTE,
       debugShowCheckedModeBanner: false,

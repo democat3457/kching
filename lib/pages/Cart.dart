@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
 import 'package:pos_system/utils/CartData.dart';
 
+import 'Checkout.dart';
 import 'loading.dart';
 
 class _CartList extends StatelessWidget {
@@ -86,7 +87,14 @@ class _CartState extends State<Cart> {
           : FloatingActionButton.extended(
               label: Text("Check Out"),
               onPressed: () {
-                throw UnimplementedError();
+                return showDialog<void>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return Checkout();
+                  },
+                );
+                // Navigator.pushNamed(context, Checkout.ROUTE);
               },
               icon: Icon(Icons.check_outlined),
             ),

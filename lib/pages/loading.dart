@@ -13,3 +13,25 @@ class Loading extends StatelessWidget {
     );
   }
 }
+
+class LoadingDialog {
+  static Future<void> showLoading(BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: SimpleDialog(
+            key: key,
+            children: [
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
