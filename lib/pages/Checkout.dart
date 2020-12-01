@@ -107,7 +107,8 @@ class _CheckoutState extends State<Checkout> {
             Navigator.pop(context); // Close First Loading Screen
             LoadingDialog.showLoading(context, new GlobalKey<State>(),
                 message: "Processing");
-            response = await setter(Tasks.Purchase, {"data": args.data});
+            response = await setter(
+                Tasks.Purchase, {"id": _controller.text, "data": args.data});
             log(response.toString());
             Navigator.pop(context); // Close Second Loading Screen
             if (!response["valid"]) {
