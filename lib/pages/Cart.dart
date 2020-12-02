@@ -98,14 +98,18 @@ class _CartState extends State<Cart> {
           ? null
           : FloatingActionButton.extended(
               label: Text("Check Out"),
-              onPressed: () {
-                return showDialog<void>(
+              onPressed: () async {
+                await showDialog<void>(
                   context: context,
                   barrierDismissible: false,
                   builder: (context) {
                     return Checkout(CheckoutArguments(_data));
                   },
                 );
+                setState(() {
+                  _loading = false;
+                  _loaded = false;
+                });
                 // Navigator.pushNamed(context, Checkout.ROUTE);
               },
               icon: Icon(Icons.check_outlined),

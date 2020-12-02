@@ -4,6 +4,7 @@ import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
+import 'package:pos_system/utils/CartData.dart';
 import 'package:pos_system/utils/api.dart';
 
 import 'loading.dart';
@@ -155,6 +156,7 @@ class _CheckoutState extends State<Checkout> {
                   ],
                 ),
               );
+              CartData.clearCart();
             }
           },
         )
