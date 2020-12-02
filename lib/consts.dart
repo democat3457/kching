@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const String TITLE = "ProDuck2Door";
 const String ENDPOINT =
-    "https://script.google.com/macros/s/AKfycbzt2lDSkLJ-beuqIMb8igHNXVla1F9qjlfz7VkljnwUcPsDRVYU/exec";
+    "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbzt2lDSkLJ-beuqIMb8igHNXVla1F9qjlfz7VkljnwUcPsDRVYU/exec";
 
 const double STORES_HEIGHT = 70;
 const double STORES_WIDTH = 250;

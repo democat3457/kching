@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:js' as js;
 
@@ -113,7 +114,11 @@ class _CheckoutState extends State<Checkout> {
             Navigator.pop(context); // Close Second Loading Screen
             if (!response["valid"]) {
               log("Detected something sly. Activate Big Chomp Protocol");
-              js.context.callMethod('open', ['https://youtu.be/RfiQYRn7fBg']);
+              print(json.encode(response));
+              try {
+                js.context.callMethod('open', ['https://youtu.be/RfiQYRn7fBg']);
+              } catch (_) {}
+              return;
             }
             if (response["overdraw_and_fail"]) {
               await showDialog(

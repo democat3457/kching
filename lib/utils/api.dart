@@ -41,21 +41,18 @@ Future<Map<String, dynamic>> getter(
     Tasks task, Map<String, String> data) async {
   String _processedData = _buildGetHeader(data);
   String _task = task.api;
-  http.Response respose =
-      await http.get("$ENDPOINT?task=$_task&$_processedData");
-  assert(respose.statusCode == 200);
-  log(respose.body);
-  return convert.json.decode(respose.body);
+  final response = await http.get("$ENDPOINT?task=$_task&$_processedData");
+  assert(response.statusCode == 200);
+  log(response.body);
+  return convert.json.decode(response.body);
 }
 
 Future<Map<String, dynamic>> setter(
     Tasks task, Map<String, dynamic> data) async {
-  http.Response response = await http
-      .get(ENDPOINT + "?task=" + task.api + "&data=" + json.encode(data)
-          // headers: <String, String>{
-          //   'Content-Type': 'application/json; charset=UTF-8',
-          // },
-          );
+  print(json.encode(data));
+  final response = await http
+      .get(ENDPOINT + "?task=" + task.api + "&data=" + json.encode(data));
   assert(response.statusCode == 200);
+  print(response.body);
   return convert.json.decode(response.body);
 }
