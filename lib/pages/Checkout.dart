@@ -60,7 +60,7 @@ class _CheckoutState extends State<Checkout> {
                   borderSide: const BorderSide(color: Colors.black),
                 ),
                 labelStyle: TextStyle(color: Colors.black),
-                labelText: "Yer Card Number `Eh?",
+                labelText: "Card ID",
               ),
             ),
           ],
