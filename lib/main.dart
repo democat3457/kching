@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: TITLE,
+      title: TITLE_SHORT,
       theme: ThemeData(
           primarySwatch: PRIMARY_COLOR,
           // fontFamily: '.SF Pro Display',

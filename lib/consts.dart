@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-const String TITLE = "KChing Simulation ProDuck2Door";
+const String TITLE = "KChing Simulation Powered By ProDuckTive";
+const String TITLE_SHORT = "KChing";
 const String ENDPOINT =
     "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbzt2lDSkLJ-beuqIMb8igHNXVla1F9qjlfz7VkljnwUcPsDRVYU/exec";
 
