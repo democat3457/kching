@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
 import 'package:pos_system/utils/CartData.dart';
 import 'package:pos_system/utils/api.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'loading.dart';
 
@@ -116,7 +116,7 @@ class _CheckoutState extends State<Checkout> {
               log("Detected something sly. Activate Big Chomp Protocol");
               print(json.encode(response));
               try {
-                js.context.callMethod('open', ['https://youtu.be/RfiQYRn7fBg']);
+                launch('https://youtu.be/RfiQYRn7fBg');
               } catch (_) {}
               return;
             }

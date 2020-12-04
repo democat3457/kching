@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pos_system/consts.dart';
 import 'package:pos_system/utils/CartData.dart';
 import 'package:pos_system/utils/api.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'loading.dart';
 
@@ -77,6 +78,7 @@ class _StoreRoute extends State<Store> {
     if (this._data == null) {
       throw UnimplementedError();
     }
+    print(this._data["site"]);
     setState(() {
       this._loaded = true;
       this._loading = false;
@@ -107,13 +109,18 @@ class _StoreRoute extends State<Store> {
             body: Center(child: Text(ERROR_LOADING_PRODUCTS)));
       }
       return Scaffold(
-          appBar: AppBar(
-            title: Text(args.name),
-          ),
-          body: buildProductList(args.id)
-          // body: Center(child: Text(_data.toString())),
-          // body: Text(args.name),
-          );
+        appBar: AppBar(
+          title: Text(args.name),
+        ),
+        body: buildProductList(args.id),
+        floatingActionButton: (_data["site"] == "")
+            ? null
+            : FloatingActionButton.extended(
+                icon: Icon(Icons.web),
+                label: Text("Open Store's Website"),
+                onPressed: () => launch(_data["site"]),
+              ),
+      );
     } else {
       throw UnimplementedError();
     }
