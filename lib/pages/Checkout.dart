@@ -26,7 +26,6 @@ class Checkout extends StatefulWidget {
 class _CheckoutState extends State<Checkout> {
   final CheckoutArguments args;
   _CheckoutState(this.args);
-  GlobalKey<State> _keyLoader = new GlobalKey<State>();
   TextEditingController _controller;
 
   void initState() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
+import 'package:pos_system/pages/CheckBal.dart';
 import 'package:pos_system/utils/CartData.dart';
 
 import 'Checkout.dart';
@@ -82,16 +83,11 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         title: Text("Shopping Cart"),
         actions: [
-          // IconButton(
-          //   icon: Icon(Icons.settings),
-          //   onPressed: () async => await showDialog(
-          //     context: context,
-          //     builder: (context) => new AlertDialog(
-          //       title: Text("Get Card Balance"),
-          //       con
-          //     );
-          //   ),
-          // )
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () async => await showDialog(
+                context: context, builder: (context) => CheckBal()),
+          )
         ],
       ),
       floatingActionButton: (_data.length == 0)
