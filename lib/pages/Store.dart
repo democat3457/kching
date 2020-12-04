@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pos_system/consts.dart';
 import 'package:pos_system/utils/CartData.dart';
 import 'package:pos_system/utils/api.dart';
@@ -34,26 +35,39 @@ class _StoreRoute extends State<Store> {
       itemBuilder: (context, index) {
         final Map<String, dynamic> itemData = this._data["data"][index];
         return Card(
-            child: ListTile(
-                leading: Text(
-                  KCHING_BUCK_SYM +
-                      itemData["cost"].toDouble().toStringAsFixed(2),
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                title: Text(itemData["name"]),
-                subtitle: Text(
-                  itemData["desc"],
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.add_shopping_cart_sharp,
-                  ),
-                  onPressed: () {
-                    CartData.addItems(
-                        {...itemData, "code": code.toUpperCase()}, 1);
-                  },
-                )));
+          child: ListTile(
+            leading: Text(
+              KCHING_BUCK_SYM + itemData["cost"].toDouble().toStringAsFixed(2),
+              style: Theme.of(context).textTheme.caption,
+            ),
+            title: Text(itemData["name"]),
+            subtitle: Text(
+              itemData["desc"],
+              style: Theme.of(context).textTheme.caption,
+            ),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.add_shopping_cart_sharp,
+              ),
+              onPressed: () async {
+                await CartData.addItems(
+                  {...itemData, "code": code.toUpperCase()},
+                  1,
+                );
+                await Fluttertoast.showToast(
+                  msg: "Added Item to Cart",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.TOP,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                  webPosition: "center",
+                );
+              },
+            ),
+          ),
+        );
       },
     );
   }
