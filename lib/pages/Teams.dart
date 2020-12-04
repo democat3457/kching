@@ -147,7 +147,8 @@ class _TeamsState extends State<Teams> {
               onPressed: () => Navigator.pushNamed(context, "/cart")),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: 16.0),
+              padding: const EdgeInsets.only(
+                  top: 16.0, left: PADDING, right: PADDING),
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: List.from(keys.map<Widget>((e) {

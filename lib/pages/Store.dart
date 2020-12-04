@@ -112,7 +112,11 @@ class _StoreRoute extends State<Store> {
         appBar: AppBar(
           title: Text(args.name),
         ),
-        body: buildProductList(args.id),
+        body: Padding(
+          padding:
+              const EdgeInsets.only(top: 16, left: PADDING, right: PADDING),
+          child: buildProductList(args.id),
+        ),
         floatingActionButton: (_data["site"] == "")
             ? null
             : FloatingActionButton.extended(

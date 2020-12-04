@@ -14,3 +14,5 @@ const String ERROR_LOADING_PRODUCTS =
     "Error Loading Products, Try again later!\nIf you think this is an error, report to facilitators.";
 
 const String KCHING_BUCK_SYM = "₭";
+
+const double PADDING = 24;
