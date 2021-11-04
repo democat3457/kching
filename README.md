@@ -1,5 +1,7 @@
 # KChing Point of Sales System
 
+*Forked from [RyanHir/Academy_Simulation_PointOfSale](https://github.com/RyanHir/Academy_Simulation_PointOfSale)*
+
 ## Getting Started
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
