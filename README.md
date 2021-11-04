@@ -1,12 +1,8 @@
-# pos_system
+# KChing Point of Sales System
 
-A new Flutter project.
+*Forked from [RyanHir/Academy_Simulation_PointOfSale](https://github.com/RyanHir/Academy_Simulation_PointOfSale)*
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
