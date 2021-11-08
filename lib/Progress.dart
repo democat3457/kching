@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'strings.dart';
+import 'consts.dart';
 
 class Progress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(mainTitle),
+        title: Text(MAIN_TITLE),
       ),
       body: Center(child: CircularProgressIndicator(),)
     );

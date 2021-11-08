@@ -5,6 +5,8 @@ import 'package:http/http.dart';
 
 import 'Progress.dart';
 import 'confirmPayment.dart';
+import 'consts.dart';
+import 'Error.dart';
 
 class Payment extends StatefulWidget {
   final String team;
@@ -22,15 +24,16 @@ class PaymentState extends State<Payment> {
 
   final _formKey = GlobalKey<FormState>();
 
-  List<dynamic> possibleItems = new List();
-  List<dynamic> selectedItems = new List();
+  List<dynamic> possibleItems = [];
+  List<dynamic> selectedItems = [];
 
   bool _loaded = false;
+  TextEditingController _cardNumberController = new TextEditingController();
 
   void load() async {
     if (_loaded) return;
     Response items = await get(
-        "https://script.google.com/macros/s/AKfycbwvuOs4vCjjECBZzSDnZ6kW0kv5hCvgEcDisGCMK1Pm/dev?"
+        "$ENDPOINT?"
         "request=getItems&"
         "team=$team");
 
@@ -51,19 +54,55 @@ class PaymentState extends State<Payment> {
     });
   }
 
-  void loadNewPage(cardNumber) {
-    double cost = 0.0;
+  Future<bool> checkCardExists(cardNumber) async {
+    Response rCardExists = await get(
+        "$ENDPOINT?"
+        "request=cardExist&"
+        "card=$cardNumber&"
+        "team=$team");
 
-    for (int x = 0; x < selectedItems.length; x++) {
-      cost = cost + double.parse(possibleItems[selectedItems[x]]["cost"]);
+    return json.decode(rCardExists.body)["data"];
+  }
+
+  void loadNewPage(cardNumber) async {
+    var url = Uri.encodeFull("$ENDPOINT?"
+              "request=cardExist&"
+              "card=$cardNumber&"
+              "team=$team");
+    print(url);
+    Response rCardExists = await get(url);
+    print(rCardExists.body);
+    bool cardExists = json.decode(rCardExists.body)["data"];
+
+    if (!cardExists) {
+      print("Invalid card $cardNumber");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Error("Card number $cardNumber is not a valid number!", false, 3)
+          )
+      );
+    } else {
+      double cost = 0.0;
+
+      for (int x = 0; x < selectedItems.length; x++) {
+        cost = cost + double.parse(possibleItems[selectedItems[x]]["cost"]);
+      }
+
+      print("The cost is $cost");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ConfirmPayment(
+                  selectedItems, possibleItems, cardNumber, cost, team)
+          )
+      ).then((successful) {
+        if (successful) {
+          _cardNumberController.clear();
+          selectedItems.clear();
+        }
+      });
     }
-
-    print("The cost is $cost");
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ConfirmPayment(
-                selectedItems, possibleItems, cardNumber, cost, team)));
   }
 
   @override
@@ -96,8 +135,10 @@ class PaymentState extends State<Payment> {
                           return "Incorrect Format (Please Reenter)";
                         }
                         cardNumber = int.parse(value);
+
                         return null;
                       },
+                      controller: _cardNumberController,
                     ),
                     Text(
                       "Press item to add to selection",
@@ -128,6 +169,10 @@ class PaymentState extends State<Payment> {
                       child: Divider(
                       ),
                     ),
+                    Text(
+                      "Press item to remove from selection",
+                      textAlign: TextAlign.center,
+                    ),
                     Container(
                       height: (60.0 * selectedItems.length),
                       child: ListView.builder(
@@ -141,13 +186,18 @@ class PaymentState extends State<Payment> {
                                 title: Text(
                                     possibleItems[selectedItems[position]]
                                         ["name"]),
+                                    onTap: () {
+                                      setState(() {
+                                        selectedItems.remove(selectedItems[position]);
+                                      });
+                                    }
                               ),
                             ),
                           );
                         },
                       ),
                     ),
-                    RaisedButton(
+                    ElevatedButton(
                       onPressed: selectedItems.length == 0
                           ? null
                           : () {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'strings.dart' as stuff;
+import 'consts.dart';
 import 'chooseTeam.dart';
 import 'package:http/http.dart' as http;
 import 'Progress.dart';
@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: stuff.mainTitle,
+      title: MAIN_TITLE,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: MAIN_COLOR,
       ),
-      home: MyHomePage(title: stuff.mainTitle),
+      home: MyHomePage(title: MAIN_TITLE),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -38,8 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void getData() async {
     if (_isLoading == true) {
       final http.Response _request = (await http.get(
-          "https://script.google.com/macros/s/AKfycbwvuOs4vCjjECBZzSDnZ6kW0kv5hCvgEcDisGCMK1Pm/dev?request=teams"));
-
+          "$ENDPOINT?request=teams"));
       _data = json.decode(_request.body);
       setState(() {
         _isLoading = false;

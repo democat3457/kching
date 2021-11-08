@@ -2,50 +2,57 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'Error.dart';
+import 'consts.dart';
 
 class Charging extends StatelessWidget {
   final int cardNumber;
   final String team;
-  final double chargeAmmount;
+  final double chargeAmount;
   final List<dynamic> possibleItems;
   final List<dynamic> selectedItems;
 
   Charging(this.possibleItems, this.selectedItems, this.cardNumber, this.team,
-      this.chargeAmmount);
+      this.chargeAmount);
 
   bool _error = false;
   String _errorMsg = "";
 
   Future<bool> checkIfMoneyExists() async {
-    var test = await http.get(
-        "https://script.google.com/macros/s/AKfycbwvuOs4vCjjECBZzSDnZ6kW0kv5hCvgEcDisGCMK1Pm/dev?"
-        "card=$cardNumber&"
-        "request=getbal");
+    var url = "$ENDPOINT?"
+              "card=$cardNumber&"
+              "request=getbal";
+    var test = await http.get(url);
+
+    print(url);
 
     print(test.body);
     var processed = json.decode(test.body);
     print(processed["data"]);
 
-    return processed["data"] > chargeAmmount;
+    return processed["data"] > chargeAmount;
   }
 
   void loading(context) async {
     bool moneyIsThere = await checkIfMoneyExists();
     if (!moneyIsThere) {
       await Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => Error("Insufficent Funds")));
-      Navigator.pop(context);
+          MaterialPageRoute(builder: (context) => Error("Insufficent Funds", false))).then((val){
+            Navigator.pop(context, val);
+          });
+      return;
     }
     for (int x = 0; x < selectedItems.length; x++) {
       int id = int.parse(possibleItems[selectedItems[x]]["id"]);
 
-      var test = await http.get(
-          "https://script.google.com/macros/s/AKfycbwvuOs4vCjjECBZzSDnZ6kW0kv5hCvgEcDisGCMK1Pm/dev?"
-          "card=$cardNumber&"
-          "team=$team&"
-          "withdrawl=$id&"
-          "request=withdrawl");
+      var url = "$ENDPOINT?"
+                "card=$cardNumber&"
+                "team=$team&"
+                "withdrawl=$id&"
+                "request=withdrawl";
 
+      var test = await http.get(url);
+
+      print(url);
       print(test.body);
       var processed = json.decode(test.body);
 
@@ -58,10 +65,11 @@ class Charging extends StatelessWidget {
 
     if (_error) {
       await Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Error(_errorMsg)));
+          context, MaterialPageRoute(builder: (context) => Error(_errorMsg, false)))
+        .then((val) => Navigator.pop(context, val));
     } else {
       var bal = await http.get(
-          "https://script.google.com/macros/s/AKfycbwvuOs4vCjjECBZzSDnZ6kW0kv5hCvgEcDisGCMK1Pm/dev?"
+          "$ENDPOINT?"
           "card=$cardNumber&"
           "request=getbal");
 
@@ -73,11 +81,10 @@ class Charging extends StatelessWidget {
       await Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => Error(
-                  "Payment Successful\nYou Have $bal3 K`Ching left in your account")));
+              builder: (ctx) => Error(
+                  "Payment Successful\nYou Have $bal3 $KCHING_CURRENCY_STR""s left in your account", true)))
+        .then((val) => Navigator.pop(context, val));
     }
-
-    Navigator.pop(context);
   }
 
   bool loadingSet = true;

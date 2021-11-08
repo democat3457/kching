@@ -1,7 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'strings.dart' as stuff;
+import 'consts.dart';
 import 'payment.dart';
 
 class ChooseTeam extends StatefulWidget {
@@ -27,7 +27,7 @@ class ChooseTeamState extends State<ChooseTeam> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(stuff.mainTitle),
+        title: Text(MAIN_TITLE),
       ),
       body: Center(
         child: DropdownButton<String>(
@@ -59,7 +59,7 @@ class ChooseTeamState extends State<ChooseTeam> {
                           )));
               },
               child: Icon(Icons.navigate_next),
-              backgroundColor: Colors.blue,
+              backgroundColor: MAIN_COLOR,
             )
           : null,
     );

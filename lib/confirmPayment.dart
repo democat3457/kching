@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pos_system/consts.dart';
 
 import 'chargingScreen.dart';
 
 class ConfirmPayment extends StatelessWidget {
   final int cardNumber;
-  final double chargeAmmount;
+  final double chargeAmount;
   final String team;
   
   final List<dynamic> possibleItems;
   final List<dynamic> selectedItems;
 
-  ConfirmPayment(this.selectedItems, this.possibleItems, this.cardNumber, this.chargeAmmount, this.team);
+  ConfirmPayment(this.selectedItems, this.possibleItems, this.cardNumber, this.chargeAmount, this.team);
 
   void chargeUser(context) async {
     await Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => Charging(possibleItems, selectedItems, cardNumber, team, chargeAmmount)));
-    Navigator.pop(context);
+            builder: (context) => Charging(possibleItems, selectedItems, cardNumber, team, chargeAmount)))
+        .then((val) {
+          Navigator.pop(context, val);
+        });
   }
 
   @override
@@ -25,26 +28,36 @@ class ConfirmPayment extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-          child: Column(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "Confirm Payment of ($chargeAmmount) Ka`Ching\n"
-            "To the card number ($cardNumber)?",
+            "Confirm Payment of ($chargeAmount) $KCHING_CURRENCY_STR""s\n"
+            "to the card number ($cardNumber)?\n",
             textAlign: TextAlign.center,
           ),
-          RaisedButton(
-            child: Text("Accept"),
-            onPressed: () {
-              chargeUser(context);
-            },
-            color: Colors.green,
-          ),
-          RaisedButton(
-            child: Text("Deny"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.red,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                child: Text("Accept"),
+                onPressed: () {
+                  chargeUser(context);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green)
+                )
+              ),
+              ElevatedButton(
+                child: Text("Deny"),
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red)
+                )
+              )
+            ]
           )
         ],
       )),
