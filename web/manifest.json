@@ -1,6 +1,6 @@
 {
-    "name": "kching",
-    "short_name": "kching",
+    "name": "K'Ching MarketPlace Online",
+    "short_name": "kching-online",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
