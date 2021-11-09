@@ -17,7 +17,7 @@ class Charging extends StatelessWidget {
   bool _error = false;
   String _errorMsg = "";
 
-  Future<bool> checkIfMoneyExists() async {
+  Future<int> getMoney() async {
     var url = "$ENDPOINT?"
               "card=$cardNumber&"
               "request=getbal";
@@ -29,26 +29,25 @@ class Charging extends StatelessWidget {
     var processed = json.decode(test.body);
     print(processed["data"]);
 
-    return processed["data"] > chargeAmount;
+    return processed["data"];
   }
 
   void loading(context) async {
-    bool moneyIsThere = await checkIfMoneyExists();
-    if (!moneyIsThere) {
-      await Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => Error("Insufficent Funds", false))).then((val){
-            Navigator.pop(context, val);
-          });
+    int currentBal = await getMoney();
+    if (currentBal < chargeAmount) {
+      await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => Error("Insufficent Funds.\nCurrent Balance:\n$KCHING_CURRENCY_SYM$currentBal", false)))
+        .then((val) => Navigator.pop(context, val));
       return;
     }
     for (int x = 0; x < selectedItems.length; x++) {
       int id = int.parse(possibleItems[selectedItems[x]]["id"]);
 
-      var url = "$ENDPOINT?"
+      var url = Uri.encodeFull("$ENDPOINT?"
                 "card=$cardNumber&"
                 "team=$team&"
                 "withdrawl=$id&"
-                "request=withdrawl";
+                "request=withdrawl");
 
       var test = await http.get(url);
 
@@ -57,15 +56,16 @@ class Charging extends StatelessWidget {
       var processed = json.decode(test.body);
 
       if ((processed as Map<String, dynamic>).containsKey("error")) {
-        _error = true;
         _errorMsg = processed["error"];
         break;
       }
     }
 
-    if (_error) {
-      await Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Error(_errorMsg, false)))
+    if (!(_errorMsg?.isEmpty ?? true)) {
+      await Navigator.push(
+          context, 
+          MaterialPageRoute(builder: 
+              (context) => Error(_errorMsg, false)))
         .then((val) => Navigator.pop(context, val));
     } else {
       var bal = await http.get(
@@ -78,7 +78,7 @@ class Charging extends StatelessWidget {
 
       var bal3 = double.parse(bal2["data"].toString());
 
-      await Navigator.pushReplacement(
+      await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (ctx) => Error(

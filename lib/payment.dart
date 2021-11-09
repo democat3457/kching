@@ -98,8 +98,10 @@ class PaymentState extends State<Payment> {
           )
       ).then((successful) {
         if (successful) {
-          _cardNumberController.clear();
-          selectedItems.clear();
+          setState(() {
+            _cardNumberController.clear();
+            selectedItems.clear();
+          });
         }
       });
     }

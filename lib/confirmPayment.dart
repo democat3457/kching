@@ -14,13 +14,12 @@ class ConfirmPayment extends StatelessWidget {
   ConfirmPayment(this.selectedItems, this.possibleItems, this.cardNumber, this.chargeAmount, this.team);
 
   void chargeUser(context) async {
-    await Navigator.pushReplacement(
+    await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Charging(possibleItems, selectedItems, cardNumber, team, chargeAmount)))
-        .then((val) {
-          Navigator.pop(context, val);
-        });
+            builder: (context) => Charging(possibleItems, 
+            selectedItems, cardNumber, team, chargeAmount)))
+      .then((val) => Navigator.pop(context, val));
   }
 
   @override
