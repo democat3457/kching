@@ -14,7 +14,6 @@ class Error extends StatelessWidget {
   Widget build(BuildContext context) {
     if (timer == null) {
       timer = Timer(Duration(seconds: timeout), () {
-        print("Popping error off with success ($success)");
         Navigator.pop(context, success);
       });
     }
