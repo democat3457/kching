@@ -30,7 +30,7 @@ Future<Map<String, dynamic>> getter(
   String _task = task.api;
   final response = await http.get("$ENDPOINT?task=$_task&$_processedData");
   print("$ENDPOINT?task=$_task&$_processedData");
-  print((await http.get("$ENDPOINT?task=sheetName")).body);
+  // print((await http.get("$ENDPOINT?task=sheetName")).body);
   assert(response.statusCode == 200);
   print(response.body);
   return convert.json.decode(response.body);
