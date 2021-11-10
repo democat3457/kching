@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_isLoading == true) {
       final http.Response _request = (await http.get(
           "$ENDPOINT?request=teams"));
+      print(_request.body);
       _data = json.decode(_request.body);
       setState(() {
         _isLoading = false;

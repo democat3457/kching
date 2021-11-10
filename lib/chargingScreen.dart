@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'Error.dart';
@@ -13,9 +14,6 @@ class Charging extends StatelessWidget {
 
   Charging(this.possibleItems, this.selectedItems, this.cardNumber, this.team,
       this.chargeAmount);
-
-  bool _error = false;
-  String _errorMsg = "";
 
   Future<int> getMoney() async {
     var url = "$ENDPOINT?"
@@ -40,51 +38,66 @@ class Charging extends StatelessWidget {
         .then((val) => Navigator.pop(context, val));
       return;
     }
-    for (int x = 0; x < selectedItems.length; x++) {
-      int id = int.parse(possibleItems[selectedItems[x]]["id"]);
 
-      var url = Uri.encodeFull("$ENDPOINT?"
-                "card=$cardNumber&"
-                "team=$team&"
-                "withdrawl=$id&"
-                "request=withdrawl");
+    List<int> purchaseIDs = selectedItems.map(
+        (item) => int.parse(possibleItems[item]["id"])
+    ).toList();
 
-      var test = await http.get(url);
+    String idQuery = purchaseIDs.map((id) {
+      return "purchase=$id";
+    }).join("&");
 
-      print(url);
-      print(test.body);
-      var processed = json.decode(test.body);
+    var url = Uri.encodeFull("$ENDPOINT?"
+              "card=$cardNumber&"
+              "team=$team&"
+              "$idQuery&"
+              "request=purchase");
 
-      if ((processed as Map<String, dynamic>).containsKey("error")) {
-        _errorMsg = processed["error"];
-        break;
+    var test = await http.get(url);
+
+    print(url);
+    print(test.body);
+    var processed = json.decode(test.body)["data"];
+
+    // var errors = [];
+    var backorders = [];
+    double balAfterPurchase = currentBal as double;
+
+    for (Map<String, dynamic> obj in processed) {
+      if (obj.containsKey("error")) {
+        // errors.add(obj["error"]);
+
+        // All errors are terminating.
+        await Navigator.push(
+            context, 
+            MaterialPageRoute(builder: 
+                (context) => Error(processed["error"], false)))
+          .then((val) => Navigator.pop(context, val));
+        return;
+      } else {
+        balAfterPurchase = min(balAfterPurchase, double.parse(obj["bal"].toString()));
+
+        if (obj.containsKey("warn")) {
+          backorders.add(int.parse(obj["id"]));
+        }
+
+        // await Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (ctx) => Error(
+        //             "Payment Successful\nYou Have $bal3 $KCHING_CURRENCY_STR""s left in your account", true)))
+        //   .then((val) => Navigator.pop(context, val));
       }
     }
 
-    if (!(_errorMsg?.isEmpty ?? true)) {
-      await Navigator.push(
-          context, 
-          MaterialPageRoute(builder: 
-              (context) => Error(_errorMsg, false)))
-        .then((val) => Navigator.pop(context, val));
-    } else {
-      var bal = await http.get(
-          "$ENDPOINT?"
-          "card=$cardNumber&"
-          "request=getbal");
-
-      var bal2 = json.decode(bal.body);
-      print(bal2);
-
-      var bal3 = double.parse(bal2["data"].toString());
-
-      await Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (ctx) => Error(
-                  "Payment Successful\nYou Have $bal3 $KCHING_CURRENCY_STR""s left in your account", true)))
-        .then((val) => Navigator.pop(context, val));
-    }
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (ctx) => Error(
+                "Payment Successful!\n"
+                "You have $balAfterPurchase $KCHING_CURRENCY_STR""s left in your account"+
+                ((backorders.length > 0) ? "\n" + backorders.length.toString() + " of your products are on backorder." : ""), true)))
+      .then((val) => Navigator.pop(context, val));
   }
 
   bool loadingSet = true;
