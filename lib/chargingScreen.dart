@@ -6,7 +6,7 @@ import 'Error.dart';
 import 'consts.dart';
 
 class Charging extends StatelessWidget {
-  final int cardNumber;
+  final dynamic cardNumber;
   final String team;
   final double chargeAmount;
   final List<dynamic> possibleItems;

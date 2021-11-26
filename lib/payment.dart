@@ -79,7 +79,7 @@ class PaymentState extends State<Payment> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Error("Card number $cardNumber is not a valid number!", false, 3)
+              builder: (context) => Error("Card number $cardNumber is invalid!", false, 3)
           )
       );
     } else {
@@ -109,7 +109,7 @@ class PaymentState extends State<Payment> {
 
   @override
   Widget build(BuildContext context) {
-    int cardNumber;
+    dynamic cardNumber;
 
     load();
 
@@ -130,13 +130,13 @@ class PaymentState extends State<Payment> {
                       decoration:
                           const InputDecoration(hintText: "Credit Card Number"),
                       validator: (value) {
+                        value = value.trim();
                         if (value.isEmpty) {
                           return 'Please enter Credit Card Info';
-                        } else if (int.tryParse(value) == null ||
-                            value.length != 6) {
-                          return "Incorrect Format (Please Reenter)";
+                        } else if (!CARD_FORMAT.hasMatch(value)) {
+                          return "Incorrect Format (Please re-enter)";
                         }
-                        cardNumber = int.parse(value);
+                        cardNumber = value.toString();
 
                         return null;
                       },

@@ -4,7 +4,7 @@ import 'package:pos_system/consts.dart';
 import 'chargingScreen.dart';
 
 class ConfirmPayment extends StatelessWidget {
-  final int cardNumber;
+  final dynamic cardNumber;
   final double chargeAmount;
   final String team;
   

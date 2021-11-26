@@ -12,3 +12,5 @@ const KCHING_CURRENCY_STR = "K'Ching Buck";
 const KCHING_CURRENCY_SYM = "₭\$";
 
 const ERROR_TIMEOUT = 5;
+
+final CARD_FORMAT = new RegExp("^[a-zA-Z]{2}\\d{8}\$");
