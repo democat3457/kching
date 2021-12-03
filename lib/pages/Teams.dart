@@ -8,19 +8,17 @@ import 'package:pos_system/pages/loading.dart';
 import 'package:pos_system/utils/api.dart';
 
 String _matchToID(String id) {
-  switch (id.substring(0, 2).toUpperCase()) {
-    case "SG":
-      return "Sports Gear";
-    case "HG":
-      return "Home Goods";
-    case "CC":
-      return "Child Care";
+  switch (id.substring(0, 3).trim().toUpperCase()) {
+    case "SOG":
+      return "Sports & Outdoor Gear";
+    case "HID":
+      return "Home Improvement & Decor";
+    case "CPC":
+      return "Child & Pet Care";
     case "FA":
       return "Fashion & Accessories";
     case "HB":
       return "Health & Beauty";
-    case "CE":
-      return "Consumer Electronics";
     default:
       return "Lorem ipsum";
   }

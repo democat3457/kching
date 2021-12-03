@@ -17,7 +17,7 @@ class _CartList extends StatelessWidget {
       final int curr = position;
       position++;
       return ListTile(
-        leading: Text(KCHING_BUCK_SYM + i["cost"].toStringAsFixed(2)),
+        leading: Text(KCHING_BUCK_SYM + double.parse(i["cost"]).toStringAsFixed(2)),
         title: Text(i["name"]),
         trailing: IconButton(
           icon: Icon(Icons.remove),
@@ -76,7 +76,7 @@ class _CartState extends State<Cart> {
     }
     double total = 0.0;
     for (final x in _data) {
-      total += x["cost"];
+      total += double.parse(x["cost"]);
     }
     total = double.parse(total.toStringAsFixed(2));
     return Scaffold(

@@ -81,7 +81,7 @@ class _CheckoutState extends State<Checkout> {
           onPressed: () async {
             log(_controller.text);
             LoadingDialog.showLoading(context, new GlobalKey<State>(),
-                message: "Verifing");
+                message: "Verifying");
             var response = await getter(Tasks.Login, {"id": _controller.text});
             bool valid = response["valid"];
             if (!valid) {
@@ -124,7 +124,7 @@ class _CheckoutState extends State<Checkout> {
               await showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                        title: Text("Overdrawl Detected"),
+                        title: Text("Overdraw Detected"),
                         content: Text(
                             "Current Balance is $KCHING_BUCK_SYM${response['bal']}"),
                         actions: [

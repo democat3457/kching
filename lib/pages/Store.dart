@@ -35,10 +35,11 @@ class _StoreRoute extends State<Store> {
       },
       itemBuilder: (context, index) {
         final Map<String, dynamic> itemData = this._data["data"][index];
+        print(itemData);
         return Card(
           child: ListTile(
             leading: Text(
-              KCHING_BUCK_SYM + itemData["cost"].toDouble().toStringAsFixed(2),
+              KCHING_BUCK_SYM + double.parse(itemData["cost"]).toStringAsFixed(2),
               style: Theme.of(context).textTheme.caption,
             ),
             title: Text(itemData["name"]),

@@ -10,10 +10,8 @@ extension TaskAPI on Tasks {
     switch (this) {
       case Tasks.Login:
         return "login";
-        break;
       case Tasks.Teams:
         return "teams";
-        break;
       case Tasks.Products:
         return "products";
       case Tasks.Purchase:
@@ -40,7 +38,7 @@ Future<Map<String, dynamic>> setter(
     Tasks task, Map<String, dynamic> data) async {
   print(json.encode(data));
   final response = await http
-      .get(ENDPOINT + "?task=" + task.api + "&data=" + json.encode(data));
+      .get(ENDPOINT + "?task=" + task.api + "&data=" + Uri.encodeFull(json.encode(data)));
   assert(response.statusCode == 200);
   print(response.body);
   return convert.json.decode(response.body);
