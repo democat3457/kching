@@ -4,7 +4,7 @@ const String TITLE = "K'Ching MarketPlace Online";
 const String TITLE_SHORT = "K'Ching MP Online";
 const String ENDPOINT =
     // "https://cors-anywhere.herokuapp.com/" + 
-    "https://script.google.com/macros/s/AKfycbxoea82-NFo4crGVvv844tOEcFnSpwVWZGXUPXBeSdNWTCyMLv9YgKiPAwDxIa1QzGh/exec";
+    "https://script.google.com/macros/s/AKfycbzmj1f0qw4uuaeWopvLPCV42ovx-iF1FFOXjZ7-OpAgoAB6QC0o2FdO-Fqf8MAVrs6AmA/exec";
 
 const double STORES_HEIGHT = 70;
 const double STORES_WIDTH = 250;
