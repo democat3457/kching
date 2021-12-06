@@ -163,11 +163,13 @@ class _TeamsState extends State<Teams> {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           floatingActionButton: FloatingActionButton.extended(
-              icon: Icon(
-                Icons.shopping_bag_outlined,
-              ),
-              label: Text("Cart"),
-              onPressed: () => Navigator.pushNamed(context, "/cart")),
+            heroTag: "team_cartbtn",
+            icon: Icon(
+              Icons.shopping_bag_outlined,
+            ),
+            label: Text("Cart"),
+            onPressed: () => Navigator.pushNamed(context, "/cart")
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -193,7 +195,8 @@ class _TeamsState extends State<Teams> {
                   }))
               ),
             ),
-          ));
+          )
+        );
     } else {
       throw UnimplementedError();
     }

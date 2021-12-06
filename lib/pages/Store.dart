@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pos_system/consts.dart';
@@ -5,7 +6,6 @@ import 'package:pos_system/utils/CartData.dart';
 import 'package:pos_system/utils/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'CheckBal.dart';
 import 'loading.dart';
 
 class StoreArguments {
@@ -39,15 +39,38 @@ class _StoreRoute extends State<Store> {
         print(itemData);
         return Card(
           child: ListTile(
+            minVerticalPadding: 17,
+            minLeadingWidth: 80,
             leading: Text(
               KCHING_BUCK_SYM + double.parse(itemData["cost"]).toStringAsFixed(2),
               style: Theme.of(context).textTheme.caption,
             ),
             title: Text(itemData["name"]),
-            subtitle: Text(
-              itemData["desc"],
-              style: Theme.of(context).textTheme.caption,
-            ),
+            subtitle: (itemData["img"] == "") 
+              ? Text(
+                  itemData["desc"],
+                  style: Theme.of(context).textTheme.caption,
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      itemData["desc"] + "\n",
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    CachedNetworkImage(
+                      imageUrl: itemData["img"],
+                      placeholder: (conttext, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Row(
+                        children: [
+                          Icon(Icons.error),
+                          Text("Error loading image")
+                        ]
+                      ),
+                      height: PRODUCT_IMAGE_HEIGHT,
+                    )
+                  ],
+                ),
             trailing: IconButton(
               icon: Icon(
                 Icons.add_shopping_cart_sharp,
@@ -128,11 +151,13 @@ class _StoreRoute extends State<Store> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   FloatingActionButton.extended(
+                    heroTag: "cartbtn",
                     icon: Icon(Icons.shopping_bag_outlined),
                     label: Text("Cart"),
                     onPressed: () => Navigator.pushNamed(context, "/cart")
                   ),
                   FloatingActionButton.extended(
+                    heroTag: "sitebtn",
                     icon: Icon(Icons.web),
                     label: Text("Open Store's Website"),
                     onPressed: () => launch(_data["site"]),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
-import 'package:pos_system/pages/CheckBal.dart';
 import 'package:pos_system/utils/CartData.dart';
 
 import 'Checkout.dart';
@@ -87,6 +86,7 @@ class _CartState extends State<Cart> {
       floatingActionButton: (_data.length == 0)
           ? null
           : FloatingActionButton.extended(
+              heroTag: "checkoutbtn",
               label: Text("Check Out"),
               onPressed: () async {
                 await showDialog<void>(

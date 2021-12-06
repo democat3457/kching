@@ -26,7 +26,7 @@ Future<Map<String, dynamic>> getter(
     Tasks task, Map<String, String> data) async {
   String _processedData = data.entries.map((e) => e.key + "=" + e.value).toList().join("&");
   String _task = task.api;
-  final response = await http.get("$ENDPOINT?task=$_task&$_processedData");
+  final response = await http.get(Uri.parse("$ENDPOINT?task=$_task&$_processedData"));
   print("$ENDPOINT?task=$_task&$_processedData");
   // print((await http.get("$ENDPOINT?task=sheetName")).body);
   assert(response.statusCode == 200);
@@ -38,7 +38,7 @@ Future<Map<String, dynamic>> setter(
     Tasks task, Map<String, dynamic> data) async {
   print(json.encode(data));
   final response = await http
-      .get(ENDPOINT + "?task=" + task.api + "&data=" + Uri.encodeFull(json.encode(data)));
+      .get(Uri.parse(ENDPOINT + "?task=" + task.api + "&data=" + Uri.encodeFull(json.encode(data))));
   assert(response.statusCode == 200);
   print(response.body);
   return convert.json.decode(response.body);

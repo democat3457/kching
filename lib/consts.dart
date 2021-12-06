@@ -6,8 +6,10 @@ const String ENDPOINT =
     // "https://cors-anywhere.herokuapp.com/" + 
     "https://script.google.com/macros/s/AKfycbzmj1f0qw4uuaeWopvLPCV42ovx-iF1FFOXjZ7-OpAgoAB6QC0o2FdO-Fqf8MAVrs6AmA/exec";
 
-const double STORES_HEIGHT = 57;
+const double STORES_HEIGHT = 60;
 const double STORES_WIDTH = 250;
+
+const double PRODUCT_IMAGE_HEIGHT = 150;
 
 const MaterialColor PRIMARY_COLOR = Colors.lightGreen;
 
