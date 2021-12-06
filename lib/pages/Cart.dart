@@ -82,14 +82,8 @@ class _CartState extends State<Cart> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping Cart"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () async => await showDialog(
-                context: context, builder: (context) => CheckBal()),
-          )
-        ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: (_data.length == 0)
           ? null
           : FloatingActionButton.extended(

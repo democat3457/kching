@@ -13,6 +13,7 @@ void main() {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
+  print("Running");
   runApp(MyApp());
 }
 
@@ -29,6 +30,11 @@ class MyApp extends StatelessWidget {
             headline1: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w500,
+                letterSpacing: 0.41,
+                color: Colors.black),
+            headline2: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w400,
                 letterSpacing: 0.41,
                 color: Colors.black),
             subtitle1: TextStyle(

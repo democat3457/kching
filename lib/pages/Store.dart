@@ -5,6 +5,7 @@ import 'package:pos_system/utils/CartData.dart';
 import 'package:pos_system/utils/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'CheckBal.dart';
 import 'loading.dart';
 
 class StoreArguments {
@@ -118,13 +119,27 @@ class _StoreRoute extends State<Store> {
               const EdgeInsets.only(top: 16, left: PADDING, right: PADDING),
           child: buildProductList(args.id),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: (_data["site"] == "")
             ? null
-            : FloatingActionButton.extended(
-                icon: Icon(Icons.web),
-                label: Text("Open Store's Website"),
-                onPressed: () => launch(_data["site"]),
-              ),
+            : Container (
+              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FloatingActionButton.extended(
+                    icon: Icon(Icons.shopping_bag_outlined),
+                    label: Text("Cart"),
+                    onPressed: () => Navigator.pushNamed(context, "/cart")
+                  ),
+                  FloatingActionButton.extended(
+                    icon: Icon(Icons.web),
+                    label: Text("Open Store's Website"),
+                    onPressed: () => launch(_data["site"]),
+                  )
+                ]
+              )
+            )
       );
     } else {
       throw UnimplementedError();

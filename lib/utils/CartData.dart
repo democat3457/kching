@@ -16,7 +16,7 @@ class CartData {
     final data = _runtime.getString(_dataVar);
     try {
       return Map.of(json.decode(data));
-    } catch (Exception) {
+    } catch (e) {
       await clearCart();
       return await getItems();
     }
@@ -32,7 +32,7 @@ class CartData {
   static Future<void> addItems(Map<String, dynamic> item, int count) async {
     var _runtime = await SharedPreferences.getInstance();
     var data = await getItems();
-    data.putIfAbsent("items", () => List<dynamic>());
+    data.putIfAbsent("items", () => []);
     for (int i = 0; i < count; ++i) {
       assert(data["items"] is List);
       data["items"].add(item);

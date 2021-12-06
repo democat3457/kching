@@ -7,6 +7,8 @@ import 'package:pos_system/pages/Store.dart';
 import 'package:pos_system/pages/loading.dart';
 import 'package:pos_system/utils/api.dart';
 
+import 'CheckBal.dart';
+
 String _matchToID(String id) {
   switch (id.substring(0, 3).trim().toUpperCase()) {
     case "SOG":
@@ -38,7 +40,7 @@ Map<String, List<Map<String, dynamic>>> _sortTeams(List<dynamic> data) {
     for (final y in data) {
       if (_matchToID(y["code"]) == x) {
         if (items[x] == null) {
-          items[x] = List();
+          items[x] = [];
         }
         items[x].add(y);
         // items[x] = y;
@@ -84,9 +86,10 @@ class _TeamsState extends State<Teams> {
           onTap: () => Navigator.pushNamed(context, Store.ROUTE,
               arguments: StoreArguments(name, code)),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ListTile(
-                leading: const Icon(Icons.store),
+                leading: Icon(Icons.store),
                 title: Text(
                   name,
                   overflow: TextOverflow.ellipsis,
@@ -136,7 +139,29 @@ class _TeamsState extends State<Teams> {
       final teams = _sortTeams(_data["teams"]);
       final keys = List<String>.from(teams.keys);
       return Scaffold(
-          appBar: AppBar(title: Text(TITLE)),
+          appBar: AppBar(
+            title: Text(TITLE),
+            actions: [
+              TextButton(
+                child: Row(
+                  children: [ 
+                    Icon(
+                      Icons.attach_money_outlined,
+                    ),
+                    Text(
+                      "Check Balance",
+                    ),
+                  ],
+                ),
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.black)
+                ),
+                onPressed: () async => await showDialog(
+                    context: context, builder: (context) => CheckBal())
+              )
+            ],
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           floatingActionButton: FloatingActionButton.extended(
               icon: Icon(
                 Icons.shopping_bag_outlined,
@@ -157,7 +182,7 @@ class _TeamsState extends State<Teams> {
                         Padding(
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Text(e,
-                              style: Theme.of(context).textTheme.headline1),
+                              style: Theme.of(context).textTheme.headline2),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
@@ -165,7 +190,8 @@ class _TeamsState extends State<Teams> {
                         ),
                       ],
                     );
-                  }))),
+                  }))
+              ),
             ),
           ));
     } else {
