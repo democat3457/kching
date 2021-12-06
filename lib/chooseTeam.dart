@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'checkBal.dart';
 import 'consts.dart';
 import 'payment.dart';
 
@@ -28,6 +29,25 @@ class ChooseTeamState extends State<ChooseTeam> {
     return Scaffold(
       appBar: AppBar(
         title: Text(MAIN_TITLE),
+        actions: [
+          TextButton(
+            child: Row(
+              children: [ 
+                Icon(
+                  Icons.attach_money_outlined,
+                ),
+                Text(
+                  "Check Balance",
+                ),
+              ],
+            ),
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.black)
+            ),
+            onPressed: () async => await showDialog(
+                context: context, builder: (context) => CheckBal())
+          )
+        ],
       ),
       body: Center(
         child: DropdownButton<String>(

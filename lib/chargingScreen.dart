@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'Error.dart';
+import 'checkBal.dart';
 import 'consts.dart';
 
 class Charging extends StatelessWidget {
@@ -15,7 +16,7 @@ class Charging extends StatelessWidget {
   Charging(this.possibleItems, this.selectedItems, this.cardNumber, this.team,
       this.chargeAmount);
 
-  Future<int> getMoney() async {
+  Future<double> getMoney() async {
     var url = "$ENDPOINT?"
               "card=$cardNumber&"
               "request=getbal";
@@ -27,11 +28,11 @@ class Charging extends StatelessWidget {
     var processed = json.decode(test.body);
     print(processed["data"]);
 
-    return processed["data"];
+    return double.parse(processed["data"].toStringAsFixed(2));
   }
 
   void loading(context) async {
-    int currentBal = await getMoney();
+    double currentBal = await CheckBal.getMoney(cardNumber);
     if (currentBal < chargeAmount) {
       await Navigator.push(context,
           MaterialPageRoute(builder: (context) => Error("Insufficent Funds.\nCurrent Balance:\n$KCHING_CURRENCY_SYM$currentBal", false)))
