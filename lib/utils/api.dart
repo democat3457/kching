@@ -24,7 +24,7 @@ extension TaskAPI on Tasks {
 
 Future<Map<String, dynamic>> getter(
     Tasks task, Map<String, String> data) async {
-  String _processedData = data.entries.map((e) => e.key + "=" + e.value).toList().join("&");
+  String _processedData = Uri.encodeFull(data.entries.map((e) => e.key + "=" + e.value).toList().join("&"));
   String _task = task.api;
   final response = await http.get(Uri.parse("$ENDPOINT?task=$_task&$_processedData"));
   print("$ENDPOINT?task=$_task&$_processedData");
