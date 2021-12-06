@@ -42,6 +42,87 @@ class _CheckoutState extends State<Checkout> {
   Widget build(BuildContext context) {
     var _context = context;
 
+    void checkout(val) async {
+      log(val);
+      LoadingDialog.showLoading(context, new GlobalKey<State>(),
+          message: "Verifying");
+      var response = await getter(Tasks.Login, {"id": val});
+      bool valid = response["valid"];
+      if (!valid) {
+        Navigator.pop(context);
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Invalid Card ID"),
+            content: Text("Try Again"),
+            actions: [
+              TextButton(
+                child: Text(
+                  "Exit",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          ),
+        );
+        // Navigator.pop(_context);
+        return;
+      }
+      Navigator.pop(context); // Close First Loading Screen
+      LoadingDialog.showLoading(context, new GlobalKey<State>(),
+          message: "Processing");
+      response = await setter(
+          Tasks.Purchase, {"id": val, "data": args.data});
+      log(response.toString());
+      Navigator.pop(context); // Close Second Loading Screen
+      if (!response["valid"]) {
+        log("Detected something sly. Activate Big Chomp Protocol");
+        print(json.encode(response));
+        try {
+          launch('https://youtu.be/RfiQYRn7fBg');
+        } catch (_) {}
+        return;
+      }
+      if (response["overdraw_and_fail"]) {
+        await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Overdraw Detected"),
+                  content: Text(
+                      "Current Balance is $KCHING_BUCK_SYM${response['bal']}"),
+                  actions: [
+                    TextButton(
+                      child: Text("Exit"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(_context);
+                      },
+                    )
+                  ],
+                ));
+      } else {
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Transaction Complete"),
+            content: Text(
+                "Your current balance is $KCHING_BUCK_SYM${response['bal']}"),
+            actions: [
+              TextButton(
+                child: Text("Exit"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(_context);
+                },
+              )
+            ],
+          ),
+        );
+        CartData.clearCart();
+      }
+    }
+
     return AlertDialog(
       title: Text("Checkout"),
       content: SingleChildScrollView(
@@ -61,6 +142,7 @@ class _CheckoutState extends State<Checkout> {
                 labelStyle: TextStyle(color: Colors.black),
                 labelText: "Card ID",
               ),
+              onSubmitted: (val) => checkout(val),
             ),
           ],
         ),
@@ -78,86 +160,7 @@ class _CheckoutState extends State<Checkout> {
             "Checkout",
             style: TextStyle(color: Colors.black),
           ),
-          onPressed: () async {
-            log(_controller.text);
-            LoadingDialog.showLoading(context, new GlobalKey<State>(),
-                message: "Verifying");
-            var response = await getter(Tasks.Login, {"id": _controller.text});
-            bool valid = response["valid"];
-            if (!valid) {
-              Navigator.pop(context);
-              await showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text("Invalid Card ID"),
-                  content: Text("Try Again"),
-                  actions: [
-                    TextButton(
-                      child: Text(
-                        "Exit",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    )
-                  ],
-                ),
-              );
-              // Navigator.pop(_context);
-              return;
-            }
-            Navigator.pop(context); // Close First Loading Screen
-            LoadingDialog.showLoading(context, new GlobalKey<State>(),
-                message: "Processing");
-            response = await setter(
-                Tasks.Purchase, {"id": _controller.text, "data": args.data});
-            log(response.toString());
-            Navigator.pop(context); // Close Second Loading Screen
-            if (!response["valid"]) {
-              log("Detected something sly. Activate Big Chomp Protocol");
-              print(json.encode(response));
-              try {
-                launch('https://youtu.be/RfiQYRn7fBg');
-              } catch (_) {}
-              return;
-            }
-            if (response["overdraw_and_fail"]) {
-              await showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: Text("Overdraw Detected"),
-                        content: Text(
-                            "Current Balance is $KCHING_BUCK_SYM${response['bal']}"),
-                        actions: [
-                          TextButton(
-                            child: Text("Exit"),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.pop(_context);
-                            },
-                          )
-                        ],
-                      ));
-            } else {
-              await showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text("Transaction Complete"),
-                  content: Text(
-                      "Your current balance is $KCHING_BUCK_SYM${response['bal']}"),
-                  actions: [
-                    TextButton(
-                      child: Text("Exit"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(_context);
-                      },
-                    )
-                  ],
-                ),
-              );
-              CartData.clearCart();
-            }
-          },
+          onPressed: () => checkout(_controller.text),
         )
       ],
     );

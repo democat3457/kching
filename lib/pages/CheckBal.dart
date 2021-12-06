@@ -26,6 +26,48 @@ class _CheckBalState extends State<CheckBal> {
   @override
   Widget build(BuildContext context) {
     var _context = context;
+
+    void checkBal(val) async {
+      LoadingDialog.showLoading(context, new GlobalKey<State>(),
+          message: "Checking");
+      var response = await getter(Tasks.Login, {"id": val});
+      Navigator.pop(context);
+      if (!response["valid"]) {
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Error"),
+            content: Text("Invalid Card ID"),
+            actions: [
+              TextButton(
+                child: Text("Exit"),
+                autofocus: true,
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          ),
+        );
+        Navigator.pop(_context);
+        return;
+      }
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Balance"),
+          content: Text(
+              "You have " + KCHING_BUCK_SYM + response["bal"].toString()),
+          actions: [
+            TextButton(
+              child: Text("Exit"),
+              autofocus: true,
+              onPressed: () => Navigator.pop(context),
+            )
+          ],
+        ),
+      );
+      Navigator.pop(_context);
+    }
+
     return AlertDialog(
       title: Text("Check Balance"),
       content: SingleChildScrollView(
@@ -45,6 +87,7 @@ class _CheckBalState extends State<CheckBal> {
                 labelStyle: TextStyle(color: Colors.black),
                 labelText: "Card ID",
               ),
+              onSubmitted: (val) => checkBal(val),
             ),
           ],
         ),
@@ -56,44 +99,7 @@ class _CheckBalState extends State<CheckBal> {
         ),
         TextButton(
           child: Text("Get Balance"),
-          onPressed: () async {
-            LoadingDialog.showLoading(context, new GlobalKey<State>(),
-                message: "Checking");
-            var response = await getter(Tasks.Login, {"id": _controller.text});
-            Navigator.pop(context);
-            if (!response["valid"]) {
-              await showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text("Error"),
-                  content: Text("Possibly Invalid Card ID"),
-                  actions: [
-                    TextButton(
-                      child: Text("Exit"),
-                      onPressed: () => Navigator.pop(context),
-                    )
-                  ],
-                ),
-              );
-              Navigator.pop(_context);
-              return;
-            }
-            await showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text("Balance"),
-                content: Text(
-                    "You Have " + KCHING_BUCK_SYM + response["bal"].toString()),
-                actions: [
-                  TextButton(
-                    child: Text("Exit"),
-                    onPressed: () => Navigator.pop(context),
-                  )
-                ],
-              ),
-            );
-            Navigator.pop(_context);
-          },
+          onPressed: () => checkBal(_controller.text),
         )
       ],
     );
