@@ -116,21 +116,18 @@ class _CartState extends State<Cart> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(child: _CartList(this)),
-                SizedBox(
-                  height: 100.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Total: $KCHING_BUCK_SYM$total",
-                          style: Theme.of(context).textTheme.headline2,
-                        )
-                      ],
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Total: $KCHING_BUCK_SYM$total",
+                        style: Theme.of(context).textTheme.headline3,
+                      )
+                    ],
                   ),
-                )
+                ),
               ],
             ),
     );
