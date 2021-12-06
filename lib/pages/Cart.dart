@@ -107,8 +107,8 @@ class _CartState extends State<Cart> {
       body: (_data.length == 0)
           ? Center(
               child: Text(
-              "It appears there is nothing in the cart,\n"
-              "try checking out the products that the many stores are selling "
+              "It appears there is nothing in the cart!\n"
+              "Try checking out the products that the many stores are selling "
               "on the previous page",
               textAlign: TextAlign.center,
             ))
