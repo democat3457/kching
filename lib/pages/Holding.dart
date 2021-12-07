@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:ntp/ntp.dart';
 import 'package:pos_system/consts.dart';
-import 'package:pos_system/pages/loading.dart';
+import 'package:pos_system/pages/Teams.dart';
 
 class Holding extends StatefulWidget {
   @override
@@ -12,10 +12,10 @@ class Holding extends StatefulWidget {
     return _HoldingState();
   }
 
-  static Future<bool> inHolding() async {
+  static bool inHolding() {
     // DateTime now = await NTP.now();
 
-    print("called inHolding");
+    // print("called inHolding");
     return DateTime.now().isBefore(OPEN_TIME);
   }
 }
@@ -41,7 +41,13 @@ class _HoldingState extends State<Holding> {
   Widget build(BuildContext context) {
     // print("Holding");
     if (_timer == null) {
-      this._timer = Timer.periodic(Duration(seconds: 1), (timer) { setState(() { }); });
+      this._timer = Timer.periodic(Duration(seconds: 1), (timer) { 
+        if (!Holding.inHolding()) {
+          Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_) => new Teams()));
+          timer.cancel();
+        }
+        setState(() { });
+      });
     }
     // if (_timeLeft == null) {
     //   _refreshTime();

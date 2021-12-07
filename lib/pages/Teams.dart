@@ -66,7 +66,7 @@ class _TeamsState extends State<Teams> {
   Map<String, dynamic> _data = {};
 
   void _loadTeams() async {
-    this._inHolding = await Holding.inHolding();
+    this._inHolding = Holding.inHolding();
 
     print(this._inHolding);
 
@@ -143,7 +143,7 @@ class _TeamsState extends State<Teams> {
     if (!_loaded && _loading) {
       return Loading();
     } else if (_loaded && !_loading) {
-      if (_inHolding) {
+      if (_inHolding && !DEV_MODE) {
         return Holding();
       }
       final teams = _sortTeams(_data["teams"]);
