@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
+import 'package:pos_system/pages/Holding.dart';
 import 'package:pos_system/pages/Store.dart';
 import 'package:pos_system/pages/loading.dart';
 import 'package:pos_system/utils/api.dart';
@@ -61,9 +62,14 @@ class Teams extends StatefulWidget {
 class _TeamsState extends State<Teams> {
   bool _loading = false;
   bool _loaded = false;
+  bool _inHolding = false;
   Map<String, dynamic> _data = {};
 
   void _loadTeams() async {
+    this._inHolding = await Holding.inHolding();
+
+    print(this._inHolding);
+
     this._data = await getter(Tasks.Teams, {});
     if (this._data == null) {
       throw UnimplementedError();
@@ -127,6 +133,7 @@ class _TeamsState extends State<Teams> {
 
   @override
   Widget build(BuildContext context) {
+    print("Building");
     if (!_loaded && !_loading) {
       _loadTeams();
       setState(() {
@@ -136,6 +143,9 @@ class _TeamsState extends State<Teams> {
     if (!_loaded && _loading) {
       return Loading();
     } else if (_loaded && !_loading) {
+      if (_inHolding) {
+        return Holding();
+      }
       final teams = _sortTeams(_data["teams"]);
       final keys = List<String>.from(teams.keys);
       return Scaffold(
