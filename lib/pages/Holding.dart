@@ -39,44 +39,43 @@ class _HoldingState extends State<Holding> {
 
   @override
   Widget build(BuildContext context) {
-    print("Holding");
-    if (_timeLeft == null) {
-      _refreshTime();
+    // print("Holding");
+    if (_timer == null) {
+      this._timer = Timer.periodic(Duration(seconds: 1), (timer) { setState(() { }); });
     }
-    if (_timeLeft == null) {
-      return Loading();
-    } else if (_timeLeft != null) {
+    // if (_timeLeft == null) {
+    //   _refreshTime();
+    // }
+    // if (_timeLeft == null) {
+    //   return Loading();
+    // } else if (_timeLeft != null) {
       return Scaffold(
         appBar: AppBar(
           title: Text(TITLE + " - LOCKED!"),
         ),
         body: Center(
-          child: Column(
-              children: [
-                Container(
-                  height: 150,
-                  width: 300,
-                  color: Colors.transparent,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: PRIMARY_COLOR,
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    child: Center(
-                      child: Text(
-                        _timeLeft.toString(),
-                        style: Theme.of(context).textTheme.caption,
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  )
-                )
-              ]
-          ),
+          child: Container(
+            height: 150,
+            width: 300,
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: PRIMARY_COLOR,
+                borderRadius: BorderRadius.all(Radius.circular(10))
+              ),
+              child: Center(
+                child: Text(
+                  OPEN_TIME.difference(DateTime.now()).toString().split('.').first.padLeft(8, "0") + "\nuntil launch!",
+                  style: Theme.of(context).textTheme.headline2,
+                  textAlign: TextAlign.center,
+                ),
+              )
+            )
+          )
         ),
       );
-    } else {
-      throw UnimplementedError();
-    }
+    // } else {
+    //   throw UnimplementedError();
+    // }
   }
 }

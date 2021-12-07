@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 const String TITLE = "K'Ching MarketPlace Online";
@@ -24,3 +25,4 @@ const double PADDING = 24;
 
 final DateTime OPEN_TIME = DateTime.utc(2021, 12, 7, 21);
 final DateTime CLOSE_TIME = DateTime.utc(2021, 12, 8, 0, 30);
+final DateFormat FORMATTER = DateFormat('HH:mm:ss');
