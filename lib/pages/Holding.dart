@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ntp/ntp.dart';
+// import 'package:ntp/ntp.dart';
 import 'package:pos_system/consts.dart';
 import 'package:pos_system/pages/loading.dart';
 
