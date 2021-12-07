@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'consts.dart';
 
 class Progress extends StatelessWidget {
-  String message = "";
+  final String message = "";
 
   Progress([message]);
 

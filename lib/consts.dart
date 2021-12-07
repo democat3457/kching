@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 const String MAIN_TITLE = 'KChing MarketPlace Live - PoS';
 const MaterialColor MAIN_COLOR = Colors.lightGreen;
 
-const String ENDPOINT = "https://script.google.com/macros/s/AKfycbzfzissAU7ODpPS_AKt3hrr1SQ9f5MMZBBIeUuTZsrLTWhFQaLp_Cicq032U2f-MPI4zw/exec";
+const String ENDPOINT = "https://script.google.com/macros/s/AKfycbwCV8e6tV0rKxOj6fXARrAEXfh3OorZv9ioD8uYAR8kpT4j6d1YLDMEPyN42a678fbnbQ/exec";
 
 const KCHING_CURRENCY_STR = "K'Ching Buck";
 const KCHING_CURRENCY_SYM = "₭\$";

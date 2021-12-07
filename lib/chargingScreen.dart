@@ -62,7 +62,7 @@ class Charging extends StatelessWidget {
 
     // var errors = [];
     var backorders = [];
-    double balAfterPurchase = currentBal as double;
+    double balAfterPurchase = currentBal;
 
     for (Map<String, dynamic> obj in processed) {
       if (obj.containsKey("error")) {
@@ -100,8 +100,6 @@ class Charging extends StatelessWidget {
                 ((backorders.length > 0) ? "\n" + backorders.length.toString() + " of your products are on backorder." : ""), true)))
       .then((val) => Navigator.pop(context, val));
   }
-
-  bool loadingSet = true;
 
   @override
   Widget build(BuildContext context) {
