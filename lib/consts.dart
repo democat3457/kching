@@ -23,7 +23,7 @@ const String KCHING_BUCK_SYM = "₭\$";
 
 const double PADDING = 24;
 
-final DateTime OPEN_TIME = DateTime.utc(2021, 12, 7, 18, 15);
+final DateTime OPEN_TIME = DateTime.utc(2021, 12, 7, 21, 0);
 final DateTime CLOSE_TIME = DateTime.utc(2021, 12, 8, 0, 30);
 final DateFormat FORMATTER = DateFormat('HH:mm:ss');
 

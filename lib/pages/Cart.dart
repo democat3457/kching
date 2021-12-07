@@ -85,25 +85,32 @@ class _CartState extends State<Cart> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: (_data.length == 0)
           ? null
-          : FloatingActionButton.extended(
-              heroTag: "checkoutbtn",
-              label: Text("Check Out"),
-              onPressed: () async {
-                await showDialog<void>(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) {
-                    return Checkout(CheckoutArguments(_data));
-                  },
-                );
-                setState(() {
-                  _loading = false;
-                  _loaded = false;
-                });
-                // Navigator.pushNamed(context, Checkout.ROUTE);
-              },
-              icon: Icon(Icons.check_outlined),
-            ),
+          : ((DateTime.now().isAfter(CLOSE_TIME)) 
+            ? FloatingActionButton.extended(
+                heroTag: "fakebtn", 
+                label: Text("The store is closed, thanks for shopping!"),
+                onPressed: () {}
+              ) 
+            : FloatingActionButton.extended(
+                heroTag: "checkoutbtn",
+                label: Text("Check Out"),
+                onPressed: () async {
+                  await showDialog<void>(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return Checkout(CheckoutArguments(_data));
+                    },
+                  );
+                  setState(() {
+                    _loading = false;
+                    _loaded = false;
+                  });
+                  // Navigator.pushNamed(context, Checkout.ROUTE);
+                },
+                icon: Icon(Icons.check_outlined),
+              )
+          ),
       body: (_data.length == 0)
           ? Center(
               child: Text(
