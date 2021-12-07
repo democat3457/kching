@@ -60,13 +60,22 @@ class _StoreRoute extends State<Store> {
                     ),
                     CachedNetworkImage(
                       imageUrl: itemData["img"],
+                      // httpHeaders: {"X-Requested-With": "XmlHttpRequest"},
                       placeholder: (conttext, url) => CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Row(
-                        children: [
-                          Icon(Icons.error),
-                          Text("Error loading image")
-                        ]
-                      ),
+                      errorWidget: (context, url, error) => // Retry image?
+                        Image.network(
+                          url,
+                          fit: BoxFit.cover,
+                          height: PRODUCT_IMAGE_HEIGHT,
+                          errorBuilder: (context, e, stacktrace) => Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.error),
+                              Text("Error loading image: " + e.toString())
+                            ]
+                          )
+                        ),
+                      fit: BoxFit.cover,
                       height: PRODUCT_IMAGE_HEIGHT,
                     )
                   ],
@@ -166,6 +175,8 @@ class _StoreRoute extends State<Store> {
               )
             )
       );
+    } else if (!_loaded && !_loading) {
+      return Loading();
     } else {
       throw UnimplementedError();
     }
