@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'holding.dart';
 import 'consts.dart';
 import 'chooseTeam.dart';
 import 'package:http/http.dart' as http;
@@ -53,6 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return _isLoading
         ? Progress()
-        : ChooseTeam(_data);
+        : (
+            DateTime.now().isAfter(CLOSE_TIME)
+            ? Holding()
+            : ChooseTeam(_data)
+          );
   }
 }
