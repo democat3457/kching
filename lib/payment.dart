@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 
 import 'Progress.dart';
@@ -15,6 +16,16 @@ class Payment extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return PaymentState(team);
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
+    );
   }
 }
 
@@ -126,7 +137,7 @@ class PaymentState extends State<Payment> {
                   children: <Widget>[
                     TextFormField(
                       // The validator receives the text that the user has entered.
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.streetAddress,
                       decoration:
                           const InputDecoration(hintText: "Credit Card Number"),
                       validator: (value) {
@@ -140,6 +151,9 @@ class PaymentState extends State<Payment> {
 
                         return null;
                       },
+                      inputFormatters: [
+                        UpperCaseTextFormatter()
+                      ],
                       controller: _cardNumberController,
                     ),
                     Text(
