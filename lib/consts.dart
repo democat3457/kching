@@ -15,4 +15,4 @@ const ERROR_TIMEOUT = 5;
 
 final CARD_FORMAT = new RegExp("^[a-zA-Z]{2}\\d{8}\$");
 
-final DateTime CLOSE_TIME = DateTime.utc(2021, 12, 8, 4, 0); // 10 PM CST, 8 December 2021
+final DateTime CLOSE_TIME = DateTime.utc(2022, 12, 8, 2, 30); // 8:30 PM CST, 8 December 2022
