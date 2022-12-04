@@ -21,21 +21,21 @@ class Holding extends StatefulWidget {
 }
 
 class _HoldingState extends State<Holding> {
-  Duration _timeLeft;
+  // Duration _timeLeft;
   Timer _timer;
 
-  void _refreshTime() async {
-    // DateTime now = await NTP.now();
-    DateTime now = DateTime.now();
-    if (now == null) {
-      throw UnimplementedError();
-    }
-    setState(() {
-      print("Setting time");
-      this._timeLeft = OPEN_TIME.difference(now);
-      this._timer = Timer.periodic(this._timeLeft, (timer) { _refreshTime(); });
-    });
-  }
+  // void _refreshTime() async {
+  //   // DateTime now = await NTP.now();
+  //   DateTime now = DateTime.now();
+  //   if (now == null) {
+  //     throw UnimplementedError();
+  //   }
+  //   setState(() {
+  //     print("Setting time");
+  //     this._timeLeft = OPEN_TIME.difference(now);
+  //     this._timer = Timer.periodic(this._timeLeft, (timer) { _refreshTime(); });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

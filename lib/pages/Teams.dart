@@ -18,8 +18,6 @@ String _matchToID(String id) {
       return "Home Improvement & Decor";
     case "CPC":
       return "Child & Pet Care";
-    case "FA":
-      return "Fashion & Accessories";
     case "HB":
       return "Health & Beauty";
     default:

@@ -23,8 +23,9 @@ const String KCHING_BUCK_SYM = "₭\$";
 
 const double PADDING = 24;
 
-final DateTime OPEN_TIME = DateTime.utc(2021, 12, 7, 21, 0);
-final DateTime CLOSE_TIME = DateTime.utc(2021, 12, 8, 0, 30);
+final DateTime OPEN_TIME  = DateTime.utc(2022, 12, 3, 9, 0); // devtime: 2022/12/03 3:00PM
+// final DateTime OPEN_TIME  = DateTime.utc(2022, 12, 8, 23, 0); // 2022/12/08 5:00PM
+final DateTime CLOSE_TIME = DateTime.utc(2022, 12, 9, 2, 10); // 2022/12/08 8:10PM
 final DateFormat FORMATTER = DateFormat('HH:mm:ss');
 
 const bool DEV_MODE = false;
