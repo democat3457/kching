@@ -14,7 +14,7 @@ const double STORES_WIDTH = 250;
 
 const double PRODUCT_IMAGE_HEIGHT = 150;
 
-const MaterialColor PRIMARY_COLOR = Colors.lightGreen;
+const MaterialColor PRIMARY_COLOR = Colors.teal;
 
 const String ERROR_LOADING_PRODUCTS =
     "Error loading products, try again later!\nIf you think this is an error, report to facilitators.";
