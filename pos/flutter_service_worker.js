@@ -6,15 +6,17 @@ const RESOURCES = {
   "version.json": "8c5510e2a552285b17b9e83ea68840fd",
 "index.html": "7134350bb6e7db5af7daa0e4a886c05d",
 "/": "7134350bb6e7db5af7daa0e4a886c05d",
-"main.dart.js": "b70bd29ceea7979b20e4a7b6b7236d06",
-"favicon.png": "ecda3df49bb408986f21deeece85b1e1",
-"icons/Icon-192.png": "0b4590a1eabbb22eb38730e0f8113e6a",
-"icons/Icon-512.png": "08b24241eb71680cbe46fdf82d1a2aed",
+"main.dart.js": "fb3b4481f1cc07bfaaff1ea3bc41aa28",
+"favicon.png": "10cb5b98a88bcbe0857809dfc4f554df",
+"icons/Icon-192.png": "0dac4473cda127c4b10b6e192ee0064d",
+"icons/Icon-512.png": "6b449ae39d50d6219f2c6b2ece9cce0a",
 "manifest.json": "c6c886283f256a6226559faa4cbba3f4",
 "assets/AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
 "assets/NOTICES": "28266dfbaa6894fda75dae7aeda5eebb",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
+"assets/packages/fluttertoast/assets/toastify.js": "8f5ac78dd0b9b5c9959ea1ade77f68ae",
+"assets/packages/fluttertoast/assets/toastify.css": "8beb4c67569fb90146861e66d94163d7",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1"
 };
 
