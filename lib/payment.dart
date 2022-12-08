@@ -54,7 +54,9 @@ class PaymentState extends State<Payment> {
       Map<String, dynamic> data = {
         "id": x["id"],
         "name": x["name"],
-        "cost": x["cost"]
+        "cost": x["cost"],
+        "stock": x["stock"],
+        "backorders": x["backorders"]
       };
 
       possibleItems.add(data);
@@ -113,6 +115,8 @@ class PaymentState extends State<Payment> {
             _cardNumberController.clear();
             selectedItems.clear();
           });
+          _loaded = false;
+          possibleItems.clear();
         }
       });
     }
@@ -147,7 +151,7 @@ class PaymentState extends State<Payment> {
                         } else if (!CARD_FORMAT.hasMatch(value)) {
                           return "Incorrect Format (Please re-enter)";
                         }
-                        cardNumber = value.toString();
+                        cardNumber = value;
 
                         return null;
                       },
@@ -171,6 +175,9 @@ class PaymentState extends State<Payment> {
                               elevation: 2,
                               child: ListTile(
                                   title: Text(possibleItems[position]["name"]),
+                                  subtitle: Text.rich(TextSpan(text: "Price: "+
+                                          possibleItems[position]["cost"] +"\tIn Stock: "+possibleItems[position]["stock"]+"\tBackordered: "+
+                                      possibleItems[position]["backorders"])),
                                   onTap: () {
                                     setState(() {
                                       selectedItems.add(position);
@@ -219,7 +226,8 @@ class PaymentState extends State<Payment> {
                           : () {
                               // Validate returns true if the form is valid, otherwise false.
                               if (_formKey.currentState.validate()) {
-                                loadNewPage(cardNumber);
+                                // Workaround for validator not running always
+                                loadNewPage(cardNumber == null ? _cardNumberController.text : cardNumber);
                               } else {
                                 print("incomplete form");
                               }

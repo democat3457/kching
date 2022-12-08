@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
 import 'package:http/http.dart' as http;
 import 'Progress.dart';
+import 'payment.dart';
 
 class CheckBal extends StatefulWidget {
   @override
@@ -114,6 +115,7 @@ class _CheckBalState extends State<CheckBal> {
                 labelText: "Card ID",
               ),
               onSubmitted: (val) => checkBal(val),
+              inputFormatters: [UpperCaseTextFormatter()],
             ),
           ],
         ),
