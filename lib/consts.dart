@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 const String MAIN_TITLE = 'KChing MarketPlace Live - PoS';
-const MaterialColor MAIN_COLOR = Colors.lightGreen;
+const MaterialColor MAIN_COLOR = Colors.teal;
 
 const String ENDPOINT = "https://script.google.com/macros/s/AKfycbwCV8e6tV0rKxOj6fXARrAEXfh3OorZv9ioD8uYAR8kpT4j6d1YLDMEPyN42a678fbnbQ/exec";
 
