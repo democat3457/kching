@@ -51,6 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     getData();
+    print("Current time: "+DateTime.now().toIso8601String());
+    print("Close time: " + CLOSE_TIME.toIso8601String());
 
     return _isLoading
         ? Progress()
