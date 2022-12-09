@@ -115,8 +115,8 @@ class PaymentState extends State<Payment> {
             _cardNumberController.clear();
             selectedItems.clear();
           });
-          _loaded = false;
-          possibleItems.clear();
+          // _loaded = false;
+          // possibleItems.clear();
         }
       });
     }
@@ -175,9 +175,9 @@ class PaymentState extends State<Payment> {
                               elevation: 2,
                               child: ListTile(
                                   title: Text(possibleItems[position]["name"]),
-                                  subtitle: Text.rich(TextSpan(text: "Price: "+
-                                          possibleItems[position]["cost"] +"\tIn Stock: "+possibleItems[position]["stock"]+"\tBackordered: "+
-                                      possibleItems[position]["backorders"])),
+                                  // subtitle: Text.rich(TextSpan(text: "Price: "+
+                                  //         possibleItems[position]["cost"] +"\tIn Stock: "+possibleItems[position]["stock"]+"\tBackordered: "+
+                                  //     possibleItems[position]["backorders"])),
                                   onTap: () {
                                     setState(() {
                                       selectedItems.add(position);
