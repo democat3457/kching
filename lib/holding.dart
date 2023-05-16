@@ -1,9 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'checkBal.dart';
 import 'consts.dart';
-import 'payment.dart';
 
 class Holding extends StatefulWidget {
   @override

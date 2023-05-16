@@ -34,7 +34,7 @@ class Progress extends StatelessWidget {
           child: SimpleDialog(
             key: key,
             title:
-                (message == null || message.isNotEmpty) ? Text(message) : null,
+                (message.isNotEmpty) ? Text(message) : null,
             children: [
               Center(
                 child: 
