@@ -2,13 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pos_system/consts.dart';
 
+// ignore: must_be_immutable
 class Error extends StatelessWidget {
   final String msg;
   final int timeout;
   final bool success;
   Error(this.msg, this.success, [this.timeout = ERROR_TIMEOUT]);
 
-  Timer timer;
+  Timer? timer;
 
   @override
   Widget build(BuildContext context) {

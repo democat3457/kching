@@ -17,16 +17,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: MAIN_COLOR,
       ),
-      home: MyHomePage(title: MAIN_TITLE),
+      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({super.key});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -38,8 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getData() async {
     if (_isLoading == true) {
-      final http.Response _request = (await http.get(
-          "$ENDPOINT?request=teams"));
+      final http.Response _request = await http.get(queryEndpoint({
+        'request': 'teams'
+      }));
       print(_request.body);
       _data = json.decode(_request.body);
       setState(() {
@@ -51,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     getData();
-    print("Current time: "+DateTime.now().toIso8601String());
+    print("Current time: " + DateTime.now().toIso8601String());
     print("Close time: " + CLOSE_TIME.toIso8601String());
 
     return _isLoading

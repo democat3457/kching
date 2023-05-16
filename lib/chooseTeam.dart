@@ -21,7 +21,7 @@ class ChooseTeamState extends State<ChooseTeam> {
   final Map<String, dynamic> data;
   ChooseTeamState(this.data);
 
-  String dropdownValue;
+  String? dropdownValue;
   bool selected = false;
 
   @override
@@ -54,10 +54,10 @@ class ChooseTeamState extends State<ChooseTeam> {
           value: dropdownValue,
           hint: Text("Select A Team"),
           icon: Icon(Icons.arrow_downward),
-          onChanged: (String newValue) {
+          onChanged: (String? newValue) {
             setState(() {
               dropdownValue = newValue;
-              selected = true;
+              if (newValue != null) selected = true;
             });
           },
           items: (data["data"].map<DropdownMenuItem<String>>((dynamic value) {

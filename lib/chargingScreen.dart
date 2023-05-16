@@ -17,9 +17,10 @@ class Charging extends StatelessWidget {
       this.chargeAmount);
 
   Future<double> getMoney() async {
-    var url = "$ENDPOINT?"
-              "card=$cardNumber&"
-              "request=getbal";
+    var url = queryEndpoint({
+      'card': '$cardNumber',
+      'request': 'getbal'
+    });
     var test = await http.get(url);
 
     print(url);
@@ -40,19 +41,16 @@ class Charging extends StatelessWidget {
       return;
     }
 
-    List<int> purchaseIDs = selectedItems.map(
-        (item) => int.parse(possibleItems[item]["id"])
+    List<String> purchaseIDs = selectedItems.map(
+        (item) => (int.parse(possibleItems[item]["id"])).toString()
     ).toList();
 
-    String idQuery = purchaseIDs.map((id) {
-      return "purchase=$id";
-    }).join("&");
-
-    var url = Uri.encodeFull("$ENDPOINT?"
-              "card=$cardNumber&"
-              "team=$team&"
-              "$idQuery&"
-              "request=purchase");
+    var url = queryEndpoint({
+      'card': cardNumber.toString(),
+      'team': team.toString(),
+      'purchase': purchaseIDs,
+      'request': 'purchase'
+    });
 
     var test = await http.get(url);
 

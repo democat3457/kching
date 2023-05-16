@@ -13,18 +13,19 @@ class CheckBal extends StatefulWidget {
   }
 
   static Future<double> getMoney(dynamic cardNumber) async {
-    var cardExists = await http.get(
-        "$ENDPOINT?"
-        "request=cardExist&"
-        "card=$cardNumber&"
-        "team=online");
+    var cardExists = await http.get(queryEndpoint({
+      'request': 'cardExist',
+      'card': cardNumber.toString(),
+      'team': 'online'
+    }));
 
     if (!json.decode(cardExists.body)["data"])
       return -1.0;
 
-    var url = "$ENDPOINT?"
-              "card=$cardNumber&"
-              "request=getbal";
+    var url = queryEndpoint({
+      'card': cardNumber.toString(),
+      'request': 'getbal'
+    });
     var test = await http.get(url);
 
     print(url);
@@ -38,7 +39,7 @@ class CheckBal extends StatefulWidget {
 }
 
 class _CheckBalState extends State<CheckBal> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
   void initState() {
     super.initState();

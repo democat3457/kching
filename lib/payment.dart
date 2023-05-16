@@ -43,10 +43,10 @@ class PaymentState extends State<Payment> {
 
   void load() async {
     if (_loaded) return;
-    Response items = await get(
-        "$ENDPOINT?"
-        "request=getItems&"
-        "team=$team");
+    Response items = await get(queryEndpoint({
+      'request': 'getItems',
+      'team': team.toString()
+    }));
 
     dynamic data = json.decode(items.body)["data"];
 
@@ -68,20 +68,21 @@ class PaymentState extends State<Payment> {
   }
 
   Future<bool> checkCardExists(cardNumber) async {
-    Response rCardExists = await get(
-        "$ENDPOINT?"
-        "request=cardExist&"
-        "card=$cardNumber&"
-        "team=$team");
+    Response rCardExists = await get(queryEndpoint({
+      'request': 'cardExist',
+      'card': cardNumber.toString(),
+      'team': team.toString()
+    }));
 
     return json.decode(rCardExists.body)["data"];
   }
 
   void loadNewPage(cardNumber) async {
-    var url = Uri.encodeFull("$ENDPOINT?"
-              "request=cardExist&"
-              "card=$cardNumber&"
-              "team=$team");
+    var url = queryEndpoint({
+      'request': 'cardExist',
+      'card': cardNumber.toString(),
+      'team': team.toString()
+    });
     print(url);
     Response rCardExists = await get(url);
     print(rCardExists.body);
@@ -145,8 +146,8 @@ class PaymentState extends State<Payment> {
                       decoration:
                           const InputDecoration(hintText: "Credit Card Number"),
                       validator: (value) {
-                        value = value.trim();
-                        if (value.isEmpty) {
+                        value = value?.trim();
+                        if (value == null || value.isEmpty) {
                           return 'Please enter Credit Card Info';
                         } else if (!CARD_FORMAT.hasMatch(value)) {
                           return "Incorrect Format (Please re-enter)";
@@ -225,7 +226,7 @@ class PaymentState extends State<Payment> {
                           ? null
                           : () {
                               // Validate returns true if the form is valid, otherwise false.
-                              if (_formKey.currentState.validate()) {
+                              if (_formKey.currentState?.validate() ?? false) {
                                 // Workaround for validator not running always
                                 loadNewPage(cardNumber == null ? _cardNumberController.text : cardNumber);
                               } else {
