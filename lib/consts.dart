@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 const String MAIN_TITLE = 'KChing MarketPlace Live - PoS';
 const MaterialColor MAIN_COLOR = Colors.teal;
 
-final Uri endpoint = Uri.parse("https://script.google.com/macros/s/AKfycbye33YAztDI-nIEBfzplOo7DQ-Lc0MJXSAgsbo4FNfu-nxH4vU_LPgw4TELnhCq9BsCNA/exec");
+final Uri endpoint = Uri.parse("https://script.google.com/macros/s/AKfycbzt70Jrr12HY08gBjEIOoxDnBOnwF437vS3HZ3bKBTghuwymZWvqLadlSYV_ig3LswXCA/exec");
 
 Uri queryEndpoint(Map<String, dynamic> parameters) {
   return endpoint.resolveUri(Uri(queryParameters: parameters));
