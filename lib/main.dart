@@ -33,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _isLoading = true;
   dynamic _data;
+  int _date = 0;
 
   void getData() async {
     if (_isLoading == true) {
@@ -43,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _data = json.decode(_request.body);
       setState(() {
         _isLoading = false;
+        _date = _data['close_date'];
       });
     }
   }
@@ -56,9 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return _isLoading
         ? Progress()
         : (
-            DateTime.now().isAfter(CLOSE_TIME)
+            DateTime.now().isAfter(DateTime.fromMillisecondsSinceEpoch(_date, isUtc: true))
             ? Holding()
             : ChooseTeam(_data)
-          );
+        );
   }
 }
